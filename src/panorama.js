@@ -114,8 +114,8 @@ const startPanorama = () => {
   scene.add(sphere);
 
   // управление
-  // const controls = new DeviceOrientationControls(camera);
-  const controls = new OrbitControls(camera, renderer.domElement); //для теста с ПК/ноута
+  const controls = new DeviceOrientationControls(camera);
+  // const controls = new OrbitControls(camera, renderer.domElement); //для теста с ПК/ноута
   controls.enableDamping = true;
 
   // анимация
