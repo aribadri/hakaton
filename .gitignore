@@ -5,7 +5,9 @@
 ### macOS ###
 # General
 .DS_Store
-.pem
+
+localhost.pem
+localhost-key.pem
 
 .AppleDouble
 .LSOverride
