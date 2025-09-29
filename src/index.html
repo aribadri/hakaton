@@ -7,13 +7,13 @@
   <title>СоюзМультПарк</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+
   <script src="https://unpkg.com/aframe-extras@3.3.0/dist/aframe-extras.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image.prod.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image-aframe.prod.js"></script>
   <script crossorigin="anonymous"
     src="//cdn.8thwall.com/web/aframe/aframe-particle-system-component-1.1.4.min.js"></script>
-
-  <script type="module" src="index.js"></script>
+  <script crossorigin="anonymous" type="module" src="index.js"></script>
 
 
 </head>
@@ -37,20 +37,35 @@
     device-orientation-permission-ui="enabled: true">
 
     <a-assets>
-      <a-asset-item id="avatarModel" src="models/santa.glb"></a-asset-item>
+      <a-asset-item id="guitarModel" src="models/guitar.glb"></a-asset-item>
+      <a-asset-item id="notaModel" src="models/nota.glb"></a-asset-item>
+
+      <!-- <a-asset-item id="avatarModel" src="models/nota.glb"></a-asset-item>
+      <a-asset-item id="avatarModel" src="models/guitar.glb"></a-asset-item> -->
+
       <!-- <audio id="musicEl" src="maska.mp3" preload="auto"></audio> -->
+         <img id="planeTexture" src="textures/snickers.png">
     </a-assets>
 
     <a-camera position="0 0 0" look-controls="enabled: false">
       <a-entity id="particles1" scale="1 1 1"
-        particle-system="preset: snow; particleCount: 2000; accelerationValue: 0 -1.8 0; rotationAngle: 3.14; rotationAxis: Z; velocitySpread: 1 0 1; velocityValue: 0 0 0; color: #ffffff;">
+        particle-system="preset: snow; particleCount: 4000; accelerationValue: 0 -1.8 0; rotationAngle: 3.14; rotationAxis: Z; velocitySpread: 1 0 1; velocityValue: 0 0 0; color: #ffffff;">
       </a-entity> <a-entity id="particles2" scale="1 1 1"
-        particle-system="preset: snow; particleCount: 2000; accelerationValue: 0 -0.8 0; rotationAngle: 3.14; rotationAxis: Z; velocitySpread: 1 0 1; velocityValue: 0 0 0; color: #ffffff;"></a-entity>
+        particle-system="preset: snow; particleCount: 4000; accelerationValue: 0 -0.8 0; rotationAngle: 3.14; rotationAxis: Z; velocitySpread: 1 0 1; velocityValue: 0 0 0; color: #ffffff;"></a-entity>
     </a-camera>
 
     <a-entity id="target" mindar-image-target="targetIndex: 0">
-      <a-entity id="model" gltf-model="#avatarModel" rotation="0 0 0" position="0 -1 0.2" scale=".5 .5 .5"></a-entity>
-    </a-entity>
+      <a-entity id="model"
+       animation-mixer="clip: idle; loop: repeat"
+       gltf-model="#guitarModel" rotation="0 0 90" position="0 0 0.2" scale=".5 .5 .5"></a-entity>
+      <a-entity
+       animation-mixer="clip: idle; loop: repeat"
+       id="model2" gltf-model="#notaModel" rotation="0 0 90" position="0 0 0.2" scale=".5 .5 .5"></a-entity>
+
+     <!-- <a-entity animation-mixer="clip: idle; loop: repeat" id="nota" gltf-model="notaModel" rotation="0 0 0"
+        position="0 0 0.2" scale="2 2 2"></a-entity> 
+      <a-entity animation-mixer="clip: idle; loop: repeat" id="guitar" gltf-model="guitarModel" rotation="0 0 0"
+        position="0 0 0.2" scale="2 2 2"></a-entity>  -->
     <!-- <a-entity id="music" position="0 0 0" sound="src: #musicEl"></a-entity> -->
 
   </a-scene>

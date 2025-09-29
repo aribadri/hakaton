@@ -18,6 +18,7 @@ AFRAME.registerComponent("smooth-position", {
 let arSystem;
 
 const onArReady = async (e) => {
+  
   if (arSystem) return;
   const closeBtn = document.querySelector("#panoramaCloseBtn");
   const canvas = document.querySelector(".panorama");
