@@ -4,7 +4,7 @@ const getScreenshot = {
   init: function () {
     const sceneEl = this.el;
 
-    // белый экран для эффекта "вспышки"
+    // белый экран для вспышки
     const flash = document.createElement("div");
     flash.className = "flash";
     document.body.appendChild(flash);
@@ -20,7 +20,7 @@ const getScreenshot = {
     `;
     document.body.appendChild(btns);
 
-    // превью результата
+    // превью
     const resultImgWrapper = document.createElement("div");
     resultImgWrapper.className = "result-wrapper hidden";
 
@@ -35,7 +35,7 @@ const getScreenshot = {
     resultImgWrapper.appendChild(backBtn);
     document.body.appendChild(resultImgWrapper);
 
-    // ссылки на кнопки
+    // ссылки
     const captureBtn = btns.querySelector("#captureBtn");
     const shareBtn = btns.querySelector("#shareBtn");
     const saveBtn = btns.querySelector("#saveBtn");
@@ -46,53 +46,95 @@ const getScreenshot = {
     //
     // 📸 Сделать фото
     //
-  //
-// 📸 Сделать фото
-//
-captureBtn.addEventListener("click", () => {
-  // эффект вспышки
-  flash.style.opacity = "1";
-  setTimeout(() => (flash.style.opacity = "0"), 120);
+    captureBtn.addEventListener("click", () => {
+      // эффект вспышки
+      flash.style.opacity = "1";
+      setTimeout(() => (flash.style.opacity = "0"), 120);
 
-  const video = sceneEl.systems["mindar-image-system"]?.video;
-  const ss = sceneEl.components?.screenshot;
-  if (!video || !ss) return;
+      const video = sceneEl.systems["mindar-image-system"]?.video;
+      const renderer = sceneEl.renderer;
+      const camera = sceneEl.camera;
+      const threeScene = sceneEl.object3D;
 
-  // AR-слой (канвас с 3D)
-  const arCanvas = ss.getCanvas("perspective");
-  if (!arCanvas) return;
+      if (!video || !renderer || !camera) return;
 
-  // размеры видео
-  const vw = video.videoWidth;
-  const vh = video.videoHeight;
-  if (!vw || !vh) return;
+      const vw = video.videoWidth;
+      const vh = video.videoHeight;
+      if (!vw || !vh) return;
 
-  // создаём общий канвас под размеры видео
-  const out = document.createElement("canvas");
-  out.width = vw;
-  out.height = vh;
-  const ctx = out.getContext("2d");
+      // итоговый канвас (под размеры экрана устройства, а не всего видео!)
+      const cw = window.innerWidth;
+      const ch = window.innerHeight;
 
-  // 1) слой камеры (видеофид)
-  ctx.drawImage(video, 0, 0, vw, vh);
+      const out = document.createElement("canvas");
+      out.width = cw;
+      out.height = ch;
+      const ctx = out.getContext("2d");
 
-  // 2) слой AR (масштабируем AR-канвас в размер видео)
-  ctx.drawImage(arCanvas, 0, 0, arCanvas.width, arCanvas.height, 0, 0, vw, vh);
+      //
+      // 1) кроп видео так же, как MindAR делает на экране
+      //
+      const videoAspect = vw / vh;
+      const canvasAspect = cw / ch;
 
-  // итоговое изображение
-  lastDataUrl = out.toDataURL("image/jpeg", 0.95);
-  resultImg.src = lastDataUrl;
-  resultImgWrapper.classList.remove("hidden");
-  resultImg.classList.add("show");
-  gsap.delayedCall(0.3, () => backBtn.classList.remove("hidden"));
+      let sx, sy, sw, sh;
+      if (videoAspect > canvasAspect) {
+        // видео слишком широкое → обрезаем по ширине
+        sh = vh;
+        sw = vh * canvasAspect;
+        sx = (vw - sw) / 2;
+        sy = 0;
+      } else {
+        // видео слишком высокое → обрезаем по высоте
+        sw = vw;
+        sh = vw / canvasAspect;
+        sx = 0;
+        sy = (vh - sh) / 2;
+      }
 
-  // переключаем кнопки
-  captureBtn.classList.add("hidden");
-  shareBtn.classList.remove("hidden");
-  saveBtn.classList.remove("hidden");
-  filesBtn.classList.add("hidden");
-});
+      // рисуем камеру (как на экране)
+      ctx.drawImage(video, sx, sy, sw, sh, 0, 0, cw, ch);
 
+      //
+      // 2) отрендерим AR слой под тот же размер (экран)
+      //
+      const arCanvas = document.createElement("canvas");
+      arCanvas.width = cw;
+      arCanvas.height = ch;
+
+      const arRenderer = new THREE.WebGLRenderer({
+        canvas: arCanvas,
+        alpha: true,
+        preserveDrawingBuffer: true,
+      });
+      arRenderer.setSize(cw, ch, false);
+      arRenderer.setViewport(0, 0, cw, ch);
+      arRenderer.outputEncoding = THREE.sRGBEncoding;
+      arRenderer.toneMapping = THREE.NoToneMapping;
+
+      camera.aspect = cw / ch;
+      camera.updateProjectionMatrix();
+
+      arRenderer.render(threeScene, camera);
+
+      // рисуем AR поверх
+      ctx.drawImage(arCanvas, 0, 0, cw, ch);
+
+      //
+      // 3) итог
+      //
+      lastDataUrl = out.toDataURL("image/png"); // PNG чтобы не темнело
+      resultImg.src = lastDataUrl;
+      resultImgWrapper.classList.remove("hidden");
+      resultImg.classList.add("show");
+      gsap.delayedCall(0.3, () => backBtn.classList.remove("hidden"));
+
+      // переключение кнопок
+      captureBtn.classList.add("hidden");
+      shareBtn.classList.remove("hidden");
+      saveBtn.classList.remove("hidden");
+      filesBtn.classList.add("hidden");
+    });
 
     //
     // 🔗 Поделиться
@@ -101,12 +143,8 @@ captureBtn.addEventListener("click", () => {
       if (!lastDataUrl) return;
       const blob = await (await fetch(lastDataUrl)).blob();
       const file = new File([blob], "screenshot.jpg", { type: "image/jpeg" });
-
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({
-          files: [file],
-          title: "СоюзМультПарк",
-        });
+        await navigator.share({ files: [file], title: "СоюзМультПарк" });
       } else {
         alert("Поделиться не поддерживается на этом устройстве.");
       }
@@ -117,17 +155,14 @@ captureBtn.addEventListener("click", () => {
     //
     saveBtn.addEventListener("click", () => {
       if (!lastDataUrl) return;
-
       filesBtn.href = lastDataUrl;
-
       shareBtn.classList.add("hidden");
       saveBtn.classList.add("hidden");
       filesBtn.classList.remove("hidden");
 
-      // скачивание
       const link = document.createElement("a");
       link.href = lastDataUrl;
-      link.download = "СоюзМультПарк.jpg";
+      link.download = "СоюзМульПарк.jpg";
       link.type = "image/jpeg";
       document.body.append(link);
       link.click();
@@ -151,7 +186,6 @@ captureBtn.addEventListener("click", () => {
     backBtn.addEventListener("click", () => {
       resultImgWrapper.classList.add("hidden");
       resultImg.src = "";
-
       captureBtn.classList.remove("hidden");
       shareBtn.classList.add("hidden");
       saveBtn.classList.add("hidden");
