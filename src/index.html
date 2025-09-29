@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>СоюзМультПарк</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+
+  <script src="https://unpkg.com/aframe-extras@3.3.0/dist/aframe-extras.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image-aframe.prod.js"></script>
+  <script crossorigin="anonymous"
+    src="//cdn.8thwall.com/web/aframe/aframe-particle-system-component-1.1.4.min.js"></script>
+  <script crossorigin="anonymous" type="module" src="index.js"></script>
+
+
+</head>
+
+<body>
+  <div id="loader" class="loading-overlay hidden">
+    <div class="spinner" role="status" aria-label="Загрузка"></div>
+  </div>
+
+  <button id="panoramaBtn" class="hidden">🌐</button>
+  <button id="panoramaCloseBtn" class="hidden">✖</button>
+  <div class="btn-right hidden">▶</div>
+  <div class="btn-left hidden">◀</div>
+  <canvas class="panorama hidden"></canvas>
+
+
+
+  <a-scene mindar-image-system="videoSettings: { facingMode: 'environment', width: 1280, height: 720 }"
+    mindar-image="imageTargetSrc: targets/targets-volk.mind; filterMinCF:0.0001; uiLoading:#loader; filterBeta: 0.01"
+    renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: true">
+
+    <a-assets>
+      <a-asset-item id="avatarModel" src="models/santa.glb"></a-asset-item>
+      <!-- <audio id="musicEl" src="maska.mp3" preload="auto"></audio> -->
+    </a-assets>
+
+    <a-camera position="0 0 0" look-controls="enabled: false">
+      <a-entity id="particles1" scale="1 1 1"
+        particle-system="preset: snow; particleCount: 4000; accelerationValue: 0 -1.8 0; rotationAngle: 3.14; rotationAxis: Z; velocitySpread: 1 0 1; velocityValue: 0 0 0; color: #ffffff;">
+      </a-entity> <a-entity id="particles2" scale="1 1 1"
+        particle-system="preset: snow; particleCount: 4000; accelerationValue: 0 -0.8 0; rotationAngle: 3.14; rotationAxis: Z; velocitySpread: 1 0 1; velocityValue: 0 0 0; color: #ffffff;"></a-entity>
+    </a-camera>
+
+    <a-entity id="target" mindar-image-target="targetIndex: 0">
+      <a-entity id="model" gltf-model="#avatarModel" rotation="0 0 0" position="0 -1 0.2" scale=".5 .5 .5"></a-entity>
+    </a-entity>
+    <!-- <a-entity id="music" position="0 0 0" sound="src: #musicEl"></a-entity> -->
+
+  </a-scene>
+
+
+
+</body>
+
+</html>
