@@ -15,41 +15,32 @@ AFRAME.registerComponent("smooth-position", {
   },
 });
 
+let arSystem;
+
 const onArReady = async (e) => {
+  if (arSystem) return;
   const closeBtn = document.querySelector("#panoramaCloseBtn");
   const canvas = document.querySelector(".panorama");
   const rightBTN = document.querySelector(".btn-right");
   const leftBTN = document.querySelector(".btn-left");
+  const panBtn = document.querySelector("#panoramaBtn");
+  arSystem = e.target.systems["mindar-image-system"];
+  panBtn.classList.remove("hidden");
+  e.target.setAttribute("screenshot-ui", "");
 
   await preloadTextures(config.panoList);
-
   startPanorama();
 
-  const panBtn = document.querySelector("#panoramaBtn");
-  panBtn.classList.remove("hidden");
-
   panBtn.addEventListener("click", () => {
+    arSystem.stop();
     closeBtn.classList.remove("hidden");
     canvas.classList.remove("hidden");
     leftBTN.classList.remove("hidden");
     rightBTN.classList.remove("hidden");
   });
-  e.target.setAttribute("screenshot-ui", "");
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  // await preloadTextures(panoList);
   const sceneEl = document.querySelector("a-scene");
   sceneEl.addEventListener("arReady", onArReady);
-
-  // sceneEl.renderer.setPixelRatio(window.devicePixelRatio * 2); // выше DPI
-  // componentRegister();
-
-  // const arSystem = sceneEl.systems["mindar-image-system"];
-  // arSystem.stop();
-
-  // componentRegister();
-  // const tmpRenderer = new THREE.WebGLRenderer();
-
-  // getPicture();
 });
