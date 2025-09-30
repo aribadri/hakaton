@@ -34,28 +34,6 @@ body {
   opacity: 0.5;
 }
 
-.btn-right,
-.btn-left {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  bottom: 5%;
-  color: var(--color);
-  background-color: var(--bg);
-  border-radius: 50%;
-  z-index: 1001;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.btn-right {
-  right: 5%;
-}
-.btn-left {
-  left: 5%;
-}
-
 .panorama {
   position: absolute;
   margin: 0 auto;
@@ -66,43 +44,6 @@ body {
   object-fit: cover;
   overflow: hidden;
   z-index: 1000;
-}
-
-#panoramaBtn {
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  top: 2%;
-  left: 2%;
-  font-size: 30px;
-  color: var(--color);
-  background-color: var(--bg);
-  border-radius: 50%;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 1000;
-}
-
-#panoramaCloseBtn {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  top: 2%;
-  left: 2%;
-  border-radius: 50%;
-  font-size: 20px;
-  display: flex;
-  border: none;
-  color: var(--color);
-  background-color: var(--bg);
-
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 1001;
 }
 
 /* контейнер с кнопками */
