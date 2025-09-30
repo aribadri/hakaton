@@ -55,6 +55,10 @@
   transform-origin: bottom center;
 }
 
+.character-center {
+  transform-origin: bottom center;
+}
+
 .character-right {
   transform-origin: bottom center;
 }

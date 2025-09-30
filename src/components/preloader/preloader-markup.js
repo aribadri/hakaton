@@ -8,6 +8,7 @@ export const createPreloaderMarkup = () => {
 
         <div class="preloader-characters">
           <img src="images/character-kesha.png" alt="Кеша" class="character character-left" />
+          <img src="images/character-kot.png" alt="Кот Матроскин" class="character character-center" />
           <img src="images/character-karlson.png" alt="Карлсон" class="character character-right" />
         </div>
 

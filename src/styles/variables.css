@@ -16,4 +16,9 @@
 
   --border-radius: 15px;
   --transition: 0.3s ease;
+
+  --spinner-size: 100px;
+  --spinner-border: 6px;
+  --spinner-color: #ccc;
+  --spinner-active: #999;
 }

@@ -32,6 +32,16 @@ export const createPreloaderTimeline = () => {
       "-=0.8"
     )
     .from(
+      ".character-center",
+      {
+        scale: 0,
+        autoAlpha: 0,
+        duration: 1.0,
+        ease: "back.out(1.7)",
+      },
+      "-=1.0"
+    )
+    .from(
       ".character-right",
       {
         x: 100,
