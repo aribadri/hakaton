@@ -2,6 +2,7 @@ import { getScreenshot } from "./components/getScreenshot.js";
 import { changeTextures } from "./components/change-textures.js";
 import { preloadTextures, startPanorama } from "./panorama";
 import config from "./config.js";
+import { initPreloader, completePreloader } from "./components/preloader/preloader.js";
 
 AFRAME.registerComponent("screenshot-ui", getScreenshot);
 AFRAME.registerComponent("change-textures", changeTextures);
@@ -16,6 +17,8 @@ AFRAME.registerComponent("smooth-position", {
 });
 
 const onArReady = async (e) => {
+  completePreloader();
+
   const closeBtn = document.querySelector("#panoramaCloseBtn");
   const canvas = document.querySelector(".panorama");
   const rightBTN = document.querySelector(".btn-right");
@@ -38,18 +41,8 @@ const onArReady = async (e) => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  // await preloadTextures(panoList);
+  initPreloader();
+
   const sceneEl = document.querySelector("a-scene");
   sceneEl.addEventListener("arReady", onArReady);
-
-  // sceneEl.renderer.setPixelRatio(window.devicePixelRatio * 2); // выше DPI
-  // componentRegister();
-
-  // const arSystem = sceneEl.systems["mindar-image-system"];
-  // arSystem.stop();
-
-  // componentRegister();
-  // const tmpRenderer = new THREE.WebGLRenderer();
-
-  // getPicture();
 });

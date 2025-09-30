@@ -1,0 +1,19 @@
+/*
+ Brand colors от СоюзМультПарк
+*/
+
+:root {
+  --primary: #726de3;
+  --secondary: #face18;
+  --info: #17a2b8;
+  --dark: #212529;
+  --white: #fff;
+
+  --purple: #603;
+  --yellow: #ffc107;
+  --gray: #63554c;
+  --gray-dark: #343a40;
+
+  --border-radius: 15px;
+  --transition: 0.3s ease;
+}
