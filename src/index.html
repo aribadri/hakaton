@@ -36,12 +36,18 @@
 
   <a-scene mindar-image-system="videoSettings: { facingMode: 'environment', width: 1280, height: 720 }"
     mindar-image="imageTargetSrc: targets/targets-volk.mind; filterMinCF:0.0001; uiLoading:#loader; filterBeta: 0.01"
-    renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
+    renderer="alpha: true; colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: true">
 
     <a-assets>
-      <a-asset-item id="avatarModel" src="models/santa.glb"></a-asset-item>
+      <a-asset-item id="guitarModel" src="models/guitar.glb"></a-asset-item>
+      <a-asset-item id="notaModel" src="models/nota.glb"></a-asset-item>
+
+      <!-- <a-asset-item id="avatarModel" src="models/nota.glb"></a-asset-item>
+      <a-asset-item id="avatarModel" src="models/guitar.glb"></a-asset-item> -->
+
       <!-- <audio id="musicEl" src="maska.mp3" preload="auto"></audio> -->
+         <img id="planeTexture" src="textures/snickers.png">
     </a-assets>
 
     <a-camera position="0 0 0" look-controls="enabled: false">
@@ -52,8 +58,17 @@
     </a-camera>
 
     <a-entity id="target" mindar-image-target="targetIndex: 0">
-      <a-entity id="model" gltf-model="#avatarModel" rotation="0 0 0" position="0 -1 0.2" scale=".5 .5 .5"></a-entity>
-    </a-entity>
+      <a-entity id="model"
+       animation-mixer="clip: idle; loop: repeat"
+       gltf-model="#guitarModel" rotation="0 0 90" position="0 0 0.2" scale=".5 .5 .5"></a-entity>
+      <a-entity
+       animation-mixer="clip: idle; loop: repeat"
+       id="model2" gltf-model="#notaModel" rotation="0 0 90" position="0 0 0.2" scale=".5 .5 .5"></a-entity>
+
+     <!-- <a-entity animation-mixer="clip: idle; loop: repeat" id="nota" gltf-model="notaModel" rotation="0 0 0"
+        position="0 0 0.2" scale="2 2 2"></a-entity> 
+      <a-entity animation-mixer="clip: idle; loop: repeat" id="guitar" gltf-model="guitarModel" rotation="0 0 0"
+        position="0 0 0.2" scale="2 2 2"></a-entity>  -->
     <!-- <a-entity id="music" position="0 0 0" sound="src: #musicEl"></a-entity> -->
 
   </a-scene>

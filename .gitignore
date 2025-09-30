@@ -6,6 +6,8 @@
 # General
 .DS_Store
 
+localhost.pem
+localhost-key.pem
 
 .AppleDouble
 .LSOverride
@@ -156,6 +158,6 @@ out
 # End of https://www.toptal.com/developers/gitignore/api/macos,node
 
 /dist
-/certs
+
 .vite
 .vercel
