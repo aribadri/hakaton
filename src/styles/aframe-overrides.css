@@ -5,7 +5,7 @@
 
 /* Dialog container */
 .a-dialog {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%) !important;
+  background: linear-gradient(135deg, rgba(88, 86, 214, 0.7) 0%, rgba(130, 94, 229, 0.7) 100%) !important;
   border-radius: var(--border-radius) !important;
   padding: 32px 24px !important;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
@@ -31,9 +31,10 @@
 /* Buttons container */
 .a-dialog-buttons-container {
   display: flex !important;
+  flex-direction: row !important;
   gap: 12px !important;
   justify-content: center !important;
-  flex-wrap: wrap !important;
+  flex-wrap: nowrap !important;
 }
 
 /* Base button styles */
@@ -56,23 +57,25 @@
 
 /* Allow button */
 .a-dialog-allow-button {
-  background-color: var(--secondary) !important;
-  color: var(--dark) !important;
+  background-color: #8B5CF6 !important;
+  color: var(--white) !important;
 }
 
 .a-dialog-allow-button:hover {
-  box-shadow: 0 6px 16px rgba(250, 206, 24, 0.4) !important;
+  background-color: #7C3AED !important;
+  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4) !important;
 }
 
 /* Deny button */
 .a-dialog-deny-button {
-  background-color: rgba(255, 255, 255, 0.2) !important;
+  background-color: #EF4444 !important;
   color: var(--white) !important;
-  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  border: none !important;
 }
 
 .a-dialog-deny-button:hover {
-  background-color: rgba(255, 255, 255, 0.3) !important;
+  background-color: #DC2626 !important;
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4) !important;
 }
 
 /* OK button */
