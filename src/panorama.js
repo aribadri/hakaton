@@ -8,13 +8,13 @@ let currentIndex = 0;
 let sphere = null;
 let scene = null;
 
-const sceneEl = document.querySelector("a-scene");
+const mindarScene = document.querySelector("a-scene");
 const closeBtn = document.querySelector("#panoramaCloseBtn");
 const devicePixelRatio = Math.min(window.devicePixelRatio, 2);
 const canvas = document.querySelector(".panorama");
 const rightBTN = document.querySelector(".btn-right");
 const leftBTN = document.querySelector(".btn-left");
-const arSystem = sceneEl.systems["mindar-image-system"];
+const arSystem = mindarScene.systems["mindar-image-system"];
 
 closeBtn.addEventListener("click", () => {
   arSystem.start();

@@ -1,20 +1,14 @@
-import { getScreenshot } from "./components/getScreenshot.js";
-import { changeTextures } from "./components/change-textures.js";
+import { getScreenshot } from "./components/screenshot.js";
+import { animate } from "./components/animation.js";
 import { preloadTextures, startPanorama } from "./panorama";
 import config from "./config.js";
-import { initPreloader, completePreloader } from "./components/preloader/preloader.js";
+import {
+  initPreloader,
+  completePreloader,
+} from "./components/preloader/preloader.js";
 
 AFRAME.registerComponent("screenshot-ui", getScreenshot);
-AFRAME.registerComponent("change-textures", changeTextures);
-AFRAME.registerComponent("smooth-position", {
-  schema: { lerp: { default: 0.15 } },
-  tick() {
-    const o = this.el.object3D;
-    if (!this._p) this._p = o.position.clone();
-    this._p.lerp(o.position, this.data.lerp);
-    o.position.copy(this._p);
-  },
-});
+AFRAME.registerComponent("custom-animation", animate);
 
 let arSystem;
 
@@ -22,15 +16,23 @@ const onArReady = async (e) => {
   completePreloader();
 
   if (arSystem) return;
+  
+  const robotModel = document.querySelector("#robot");
+  const guitarModel = document.querySelector("#guitar");
 
   const closeBtn = document.querySelector("#panoramaCloseBtn");
   const canvas = document.querySelector(".panorama");
   const rightBTN = document.querySelector(".btn-right");
   const leftBTN = document.querySelector(".btn-left");
   const panBtn = document.querySelector("#panoramaBtn");
+
   arSystem = e.target.systems["mindar-image-system"];
+
   panBtn.classList.remove("hidden");
+
   e.target.setAttribute("screenshot-ui", "");
+  robotModel.setAttribute("custom-animation", "");
+  guitarModel.setAttribute("custom-animation", "");
 
   await preloadTextures(config.panoList);
   startPanorama();
@@ -45,7 +47,6 @@ const onArReady = async (e) => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-
   initPreloader();
 
   const sceneEl = document.querySelector("a-scene");
@@ -54,11 +55,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // Перевод текста A-Frame на русский
   const observer = new MutationObserver(() => {
     const dialogText = document.querySelector(".a-dialog-text");
-    if (dialogText && (dialogText.textContent.includes("immersive") || dialogText.textContent.includes("HTTPS") || dialogText.textContent.includes("device sensors"))) {
+    if (
+      dialogText &&
+      (dialogText.textContent.includes("immersive") ||
+        dialogText.textContent.includes("HTTPS") ||
+        dialogText.textContent.includes("device sensors"))
+    ) {
       if (dialogText.textContent.includes("HTTPS")) {
-        dialogText.textContent = "Откройте этот сайт по HTTPS для входа в VR режим и предоставления доступа к датчикам устройства.";
+        dialogText.textContent =
+          "Откройте этот сайт по HTTPS для входа в VR режим и предоставления доступа к датчикам устройства.";
       } else {
-        dialogText.textContent = "Это иммерсивное приложение требует доступа к датчикам ориентации устройства для полноценной работы.";
+        dialogText.textContent =
+          "Это иммерсивное приложение требует доступа к датчикам ориентации устройства для полноценной работы.";
       }
       const allowBtn = document.querySelector(".a-dialog-allow-button");
       const denyBtn = document.querySelector(".a-dialog-deny-button");
