@@ -1,21 +1,23 @@
 .a-modal {
-  background: rgba(33, 37, 41, 0.85) !important;
-  backdrop-filter: blur(4px) !important;
+  backdrop-filter: blur(20px) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  padding: 20px!important;
 }
 
 /* Dialog container */
 .a-dialog {
-  background: linear-gradient(135deg, rgba(88, 86, 214, 0.7) 0%, rgba(130, 94, 229, 0.7) 100%) !important;
-  border-radius: var(--border-radius) !important;
-  padding: 32px 24px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(20px) !important;
+  border-radius: 25px !important;
+  /* padding: 20px !important; */
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
-  max-width: 90% !important;
-  width: 400px !important;
+  max-width: calc(100% - 40px) !important;
+  width: 100% !important;
 }
 
 /* Text container */
 .a-dialog-text-container {
-  margin-bottom: 24px !important;
+  /* margin-bottom: 24px !important; */
 }
 
 /* Dialog text */
@@ -40,7 +42,7 @@
 /* Base button styles */
 .a-dialog-button {
   padding: 12px 24px !important;
-  border-radius: var(--border-radius) !important;
+  border-radius: 14px !important;
   border: none !important;
   font-size: 16px !important;
   font-weight: 600 !important;
@@ -57,25 +59,25 @@
 
 /* Allow button */
 .a-dialog-allow-button {
-  background-color: #8B5CF6 !important;
-  color: var(--white) !important;
+  background-color: #F8F2E9 !important;
+  color: #000 !important;
 }
 
 .a-dialog-allow-button:hover {
-  background-color: #7C3AED !important;
-  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4) !important;
+  background-color: #E8E2D9 !important;
+  box-shadow: 0 6px 16px rgba(248, 242, 233, 0.4) !important;
 }
 
 /* Deny button */
 .a-dialog-deny-button {
-  background-color: #EF4444 !important;
+  background-color: #FF6F23 !important;
   color: var(--white) !important;
   border: none !important;
 }
 
 .a-dialog-deny-button:hover {
-  background-color: #DC2626 !important;
-  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4) !important;
+  background-color: #EF5F13 !important;
+  box-shadow: 0 6px 16px rgba(255, 111, 35, 0.4) !important;
 }
 
 /* OK button */
@@ -91,8 +93,8 @@
 /* Mobile responsive */
 @media (max-width: 480px) {
   .a-dialog {
-    width: 90% !important;
-    padding: 24px 20px !important;
+    width: calc(100% - 40px) !important;
+    padding: 20px !important;
   }
 
   .a-dialog-text {
