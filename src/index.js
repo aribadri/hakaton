@@ -2,10 +2,8 @@ import { getScreenshot } from "./components/screenshot.js";
 import { animate } from "./components/animation.js";
 import { preloadTextures, startPanorama } from "./panorama";
 import config from "./config.js";
-import {
-  initPreloader,
-  completePreloader,
-} from "./components/preloader/preloader.js";
+import { initPreloader, completePreloader } from "./components/preloader/preloader.js";
+import { initScanner } from "./components/scanner/scanner.js";
 
 AFRAME.registerComponent("screenshot-ui", getScreenshot);
 AFRAME.registerComponent("custom-animation", animate);
@@ -48,6 +46,7 @@ const onArReady = async (e) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   initPreloader();
+  initScanner();
 
   const sceneEl = document.querySelector("a-scene");
   sceneEl.addEventListener("arReady", onArReady);

@@ -1,0 +1,136 @@
+/*
+ Scanner Component - СоюзМультПарк
+*/
+
+#custom-scanner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  pointer-events: none;
+}
+
+#custom-scanner.hidden {
+  display: none !important;
+}
+
+.scanner-container {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.film-frame {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 8px solid #F8F2E9;
+  border-radius: 20px;
+  box-shadow:
+    0 0 0 3px #FF6F23,
+    0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.perforation {
+  position: absolute;
+  display: flex;
+  gap: 15px;
+}
+
+.perforation-left,
+.perforation-right {
+  flex-direction: column;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.perforation-left {
+  left: -20px;
+}
+
+.perforation-right {
+  right: -20px;
+}
+
+.perforation-hole {
+  width: 8px;
+  height: 8px;
+  background: #F8F2E9;
+  border-radius: 2px;
+  opacity: 0.8;
+}
+
+.scanner-content {
+  text-align: center;
+  z-index: 10;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+}
+
+.scanner-icon {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
+}
+
+.scanner-text {
+  color: #F8F2E9;
+  font-size: 20px;
+  font-weight: 600;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px;
+}
+
+.scanner-subtext {
+  color: #F8F2E9;
+  font-size: 14px;
+  opacity: 0.9;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.scan-line {
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    #FF6F23 50%,
+    transparent 100%);
+  box-shadow: 0 0 10px #FF6F23;
+  top: 0;
+}
+
+.vintage-camera {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .scanner-container {
+    width: 85%;
+  }
+
+  .scanner-text {
+    font-size: 18px;
+  }
+
+  .scanner-subtext {
+    font-size: 13px;
+  }
+
+  .scanner-icon {
+    width: 100px;
+    height: 100px;
+  }
+}
