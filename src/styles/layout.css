@@ -6,10 +6,16 @@ html,
 body {
   padding: 0;
   margin: 0;
+  background: transparent;
 }
-body {
-  background-color: #726de3;
 
+/* A-Frame scene background */
+a-scene {
+  background: transparent !important;
+}
+
+a-scene canvas {
+  background: transparent !important;
 }
 
 .hidden {

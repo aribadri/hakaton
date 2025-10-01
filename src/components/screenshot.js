@@ -14,9 +14,23 @@ const getScreenshot = {
     btns.className = "btns";
     btns.innerHTML = `
       <button id="captureBtn"></button>
-      <button id="shareBtn" class="hidden">📤</button>
-      <button id="saveBtn" class="hidden">💾</button>
-      <button id="filesBtn" class="hidden">📂</button>
+      <button id="shareBtn" class="hidden">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 16V4M12 4L8 8M12 4L16 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 17V19C4 20.1046 4.89543 21 6 21H18C19.1046 21 20 20.1046 20 19V17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <button id="saveBtn" class="hidden">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 4V16M12 16L8 12M12 16L16 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 17V19C4 20.1046 4.89543 21 6 21H18C19.1046 21 20 20.1046 20 19V17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <button id="filesBtn" class="hidden">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 7V18C3 19.1046 3.89543 20 5 20H19C20.1046 20 21 19.1046 21 18V9C21 7.89543 20.1046 7 19 7H13L11 4H5C3.89543 4 3 4.89543 3 6V7Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     `;
     document.body.appendChild(btns);
 
@@ -29,7 +43,11 @@ const getScreenshot = {
 
     const backBtn = document.createElement("button");
     backBtn.className = "back-btn hidden";
-    backBtn.innerHTML = "✖";
+    backBtn.innerHTML = `
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    `;
 
     resultImgWrapper.appendChild(resultImg);
     resultImgWrapper.appendChild(backBtn);
@@ -155,10 +173,6 @@ const getScreenshot = {
     //
     saveBtn.addEventListener("click", () => {
       if (!lastDataUrl) return;
-      filesBtn.href = lastDataUrl;
-      shareBtn.classList.add("hidden");
-      saveBtn.classList.add("hidden");
-      filesBtn.classList.remove("hidden");
 
       const link = document.createElement("a");
       link.href = lastDataUrl;
