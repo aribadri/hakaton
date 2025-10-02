@@ -15,12 +15,14 @@
   <link rel="stylesheet" href="styles/aframe-overrides.css">
   <link rel="stylesheet" href="components/preloader/preloader.css">
   <link rel="stylesheet" href="components/scanner/scanner.css">
+  <link rel="stylesheet" href="components/quiz/quiz.css">
   <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
   <script src="https://unpkg.com/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image.prod.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image-aframe.prod.js"></script>
   <script crossorigin="anonymous"
     src="//cdn.8thwall.com/web/aframe/aframe-particle-system-component-1.1.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
   <script crossorigin="anonymous" type="module" src="index.js"></script>
 
 
@@ -30,6 +32,10 @@
   <div id="loader" class="loading-overlay hidden">
     <div class="spinner" role="status" aria-label="Загрузка"></div>
   </div>
+
+  <button id="quizBtn" class="hidden quiz-trigger-btn">
+    Пройти квиз
+  </button>
 
   <button id="panoramaBtn" class="hidden">
     <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -92,10 +98,47 @@
     </a-camera>
 
 
-   
+
   </a-scene>
 
+  <!-- Quiz Modal -->
+  <div id="quizModal" class="quiz-modal hidden">
+    <div class="quiz-container">
+      <!-- Header -->
+      <div class="quiz-header">
+        <h2>Как хорошо вы знаете СоюзМультфильм?</h2>
+        <button id="quizCloseBtn" class="quiz-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
 
+      <!-- Progress -->
+      <div class="quiz-progress">
+        <div class="quiz-progress-bar" id="progressBar"></div>
+        <span class="quiz-progress-text" id="progressText">Вопрос 1 из 5</span>
+      </div>
+
+      <!-- Question Screen -->
+      <div id="questionScreen" class="quiz-screen">
+        <h3 id="questionText" class="quiz-question"></h3>
+        <div id="answersContainer" class="quiz-answers"></div>
+      </div>
+
+      <!-- Result Screen -->
+      <div id="resultScreen" class="quiz-screen hidden">
+        <div class="quiz-result">
+          <h3 id="resultTitle"></h3>
+          <p id="resultDescription"></p>
+          <div class="quiz-score">
+            <span id="scoreText"></span>
+          </div>
+          <button id="restartBtn" class="quiz-btn-primary">Пройти еще раз</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 

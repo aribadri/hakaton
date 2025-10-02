@@ -1,0 +1,34 @@
+<!-- Quiz Modal -->
+<div id="quizModal" class="quiz-modal hidden">
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h2>Как хорошо вы знаете СоюзМультфильм?</h2>
+      <button id="quizCloseBtn" class="quiz-close-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar" id="progressBar"></div>
+      <span class="quiz-progress-text" id="progressText">Вопрос 1 из 5</span>
+    </div>
+
+    <div id="questionScreen" class="quiz-screen">
+      <h3 id="questionText" class="quiz-question"></h3>
+      <div id="answersContainer" class="quiz-answers"></div>
+    </div>
+
+    <div id="resultScreen" class="quiz-screen hidden">
+      <div class="quiz-result">
+        <h3 id="resultTitle"></h3>
+        <p id="resultDescription"></p>
+        <div class="quiz-score">
+          <span id="scoreText"></span>
+        </div>
+        <button id="restartBtn" class="quiz-btn-primary">Пройти еще раз</button>
+      </div>
+    </div>
+  </div>
+</div>

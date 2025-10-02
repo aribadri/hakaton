@@ -7,6 +7,7 @@ import {
   completePreloader,
 } from "./components/preloader/preloader.js";
 import { initScanner } from "./components/scanner/scanner.js";
+import { Quiz } from "./components/quiz/quiz.js";
 
 AFRAME.registerComponent("screenshot-ui", getScreenshot);
 AFRAME.registerComponent("custom-animation", animate);
@@ -58,6 +59,10 @@ const onArReady = async (e) => {
 
   panBtn.classList.remove("hidden");
 
+  // Quiz button
+  const quizBtn = document.querySelector("#quizBtn");
+  quizBtn.classList.remove("hidden");
+
   e.target.setAttribute("screenshot-ui", "");
 
   models.forEach((model) => {
@@ -87,10 +92,26 @@ document.addEventListener("DOMContentLoaded", () => {
   initScanner();
   setContent();
 
+  // Quiz
+  const quiz = new Quiz();
+  const quizBtn = document.querySelector("#quizBtn");
+  quizBtn.addEventListener("click", () => {
+    if (arSystem) {
+      arSystem.pause();
+    }
+    quiz.open();
+  });
+
+  const quizCloseBtn = document.getElementById("quizCloseBtn");
+  quizCloseBtn.addEventListener("click", () => {
+    if (arSystem) {
+      arSystem.unpause();
+    }
+  });
+
   const sceneEl = document.querySelector("a-scene");
   sceneEl.addEventListener("arReady", onArReady);
 
-  // Перевод текста A-Frame на русский
   const observer = new MutationObserver(() => {
     const dialogText = document.querySelector(".a-dialog-text");
     if (

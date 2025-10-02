@@ -162,3 +162,26 @@
   transform: scale(1.1);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
+
+/* Quiz trigger button */
+.quiz-trigger-btn {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  padding: 12px 20px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all var(--transition);
+  box-shadow: 0 4px 12px rgba(114, 109, 227, 0.3);
+}
+
+.quiz-trigger-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 8px rgba(114, 109, 227, 0.4);
+}
