@@ -69,7 +69,8 @@ a-scene canvas {
 }
 
 .result-wrapper img,
-.result-wrapper .back-btn {
+.result-wrapper .back-btn,
+.result-wrapper .cta-banner {
   pointer-events: auto;
 }
 
@@ -88,6 +89,50 @@ a-scene canvas {
 
 #resultImg.show {
   opacity: 1;
+}
+
+/* CTA Banner */
+.cta-banner {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(114, 109, 227, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 18px 24px;
+  border-radius: 16px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: left;
+  box-shadow: 0 8px 24px rgba(114, 109, 227, 0.4);
+  z-index: 1002;
+  animation: ctaSlideUp 0.4s ease-out 0.3s both;
+}
+
+.cta-banner svg {
+  flex-shrink: 0;
+}
+
+.cta-banner span {
+  display: inline-block;
+}
+
+@keyframes ctaSlideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 /* Flash Effect */
