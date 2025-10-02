@@ -90,6 +90,16 @@
   box-shadow: 0 6px 16px rgba(250, 206, 24, 0.4) !important;
 }
 
+
+.a-loader-title{
+  display: none !important;
+
+}
+.a-loader{
+  display: none !important;
+
+}
+
 /* Mobile responsive */
 @media (max-width: 480px) {
   .a-dialog {
