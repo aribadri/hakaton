@@ -59,17 +59,29 @@
 
 
   <a-scene mindar-image-system="videoSettings: { facingMode: 'environment', width: 1280, height: 720 }"
-    mindar-image="imageTargetSrc: targets/targets-both.mind; filterMinCF:0.00001; uiLoading:#loader; uiScanning: #custom-scanner; filterBeta: 0.001"
-    renderer="alpha: true; colorManagement: true; shadow: true"
-    vr-mode-ui="enabled: false"
+    mindar-image="imageTargetSrc: targets/targets-5.mind; filterMinCF:0.00001; uiLoading:#loader; uiScanning: #custom-scanner; filterBeta: 0.001"
+    renderer="alpha: true; colorManagement: true; shadow: true" vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: true">
 
     <a-assets>
-      <a-asset-item id="guitarModel" src="models/guitar2.glb"></a-asset-item>
-      <a-asset-item id="robotModel" src="models/robot.glb"></a-asset-item>
+      <a-asset-item id="guitarModel" src="models/guitar4.glb"></a-asset-item>
+      <a-asset-item id="robotModel" src="models/robot_anim.glb"></a-asset-item>
+      <a-asset-item id="boxModel" src="models/box_anim.glb"></a-asset-item>
+      <a-asset-item id="rogatkaModel" src="models/rogatka_noanim.glb"></a-asset-item>
+      <a-asset-item id="tikvaModel" src="models/tikva.glb"></a-asset-item>
       <img id="bblTexture" src="textures/bbl.png" />
-      <!-- <audio id="genaSoundEl" src="audio/bg.mp3" preload="auto"></audio> -->
     </a-assets>
+
+
+    <!-- 7 якорей -->
+    <a-entity id="anchor-0" mindar-image-target="targetIndex: 0"></a-entity>
+    <a-entity id="anchor-1" mindar-image-target="targetIndex: 1"></a-entity>
+    <a-entity id="anchor-2" mindar-image-target="targetIndex: 2"></a-entity>
+    <a-entity id="anchor-3" mindar-image-target="targetIndex: 3"></a-entity>
+    <a-entity id="anchor-4" mindar-image-target="targetIndex: 4"></a-entity>
+    <a-entity id="anchor-5" mindar-image-target="targetIndex: 5"></a-entity>
+    <a-entity id="anchor-6" mindar-image-target="targetIndex: 6"></a-entity>
+
 
     <!-- снег -->
     <a-camera position="0 0 0" look-controls="enabled: false">
@@ -80,53 +92,7 @@
     </a-camera>
 
 
-    <!-- МЕТКА ВОЛК -->
-
-    <!-- гитара -->
-    <a-entity id="target-volk" mindar-image-target="targetIndex: 0">
-      <a-entity id="guitar" animation-mixer="clip: idle_guitar; loop: repeat" gltf-model="#guitarModel" rotation="0 0 0"
-        position="0 0 0.2" scale=".5 .5 .5"></a-entity>
-
-      <!-- Робот -->
-      <a-entity animation-mixer="clip: idle_robot; loop: repeat" gltf-model="#robotModel" id="robot" rotation="0 -45 0"
-        position="0.5 0 0.2" scale="0.5 0.5 0.5" shadow="cast: true; receive: true">
-        <a-light type="point" color="white" position="0 3 0" intensity="0.5"></a-light>
-        <a-plane id="bubble" src="#bblTexture" position="0 1.6 0" scale="1 0.4 0.01" transparent="true">
-        </a-plane>
-      </a-entity>
-
-      <!-- свет -->
-      <a-entity light="type: ambient; intensity: 1.2; color: #ffffff"></a-entity>
-      <a-entity light="type: directional; intensity: 1.5; castShadow: true" position="1 4 3" shadow-map-width="2048"
-        shadow-map-height="2048">
-      </a-entity>
-
-      <!-- пол -->
-      <a-plane rotation="-90 0 0" position="0 -2 0" width="100" height="100" color="#ffffff" material="shader: shadow"
-        shadow>
-      </a-plane>
-    </a-entity>
-
-
-    <!-- МЕТКА ТРИО -->
-
-    <a-entity id="target-volk" mindar-image-target="targetIndex: 1">
-
-      <a-entity id="guitar" animation-mixer="clip: idle_guitar; loop: repeat" gltf-model="#guitarModel" rotation="0 0 0"
-        position="0 0 0.2" scale=".5 .5 .5"></a-entity>
-
-      <!-- свет -->
-      <a-entity light="type: ambient; intensity: 1.2; color: #ffffff"></a-entity>
-      <a-entity light="type: directional; intensity: 1.5; castShadow: true" position="1 4 3" shadow-map-width="1024"
-        shadow-map-height="1024">
-      </a-entity>
-
-      <!-- пол -->
-      <a-plane rotation="-90 0 0" position="0 -2 0" width="100" height="100" color="#ffffff" material="shader: shadow"
-        shadow>
-      </a-plane>
-    </a-entity>
-
+   
   </a-scene>
 
 

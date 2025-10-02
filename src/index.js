@@ -2,7 +2,10 @@ import { getScreenshot } from "./components/screenshot.js";
 import { animate } from "./components/animation.js";
 import { preloadTextures, startPanorama } from "./panorama";
 import config from "./config.js";
-import { initPreloader, completePreloader } from "./components/preloader/preloader.js";
+import {
+  initPreloader,
+  completePreloader,
+} from "./components/preloader/preloader.js";
 import { initScanner } from "./components/scanner/scanner.js";
 
 AFRAME.registerComponent("screenshot-ui", getScreenshot);
@@ -10,13 +13,40 @@ AFRAME.registerComponent("custom-animation", animate);
 
 let arSystem;
 
+const setContent = () => {
+  const groupTrio = [0, 1, 2, 3];
+  const groupVolk = [4, 5, 6];
+
+  for (let i = 0; i <= 6; i++) {
+    const anchor = document.querySelector("#anchor-" + i);
+    anchor.addEventListener("targetFound", () => {
+      if (groupTrio.includes(i)) {
+        anchor.insertAdjacentHTML("beforeend", config.trioTemplate);
+      }
+      if (groupVolk.includes(i)) {
+        anchor.insertAdjacentHTML("beforeend", config.volkTemplate);
+      }
+    });
+
+    anchor.addEventListener("targetLost", () => {
+      if (groupTrio.includes(i)) {
+        const existing = anchor.querySelector(".target-trio-content");
+        if (existing) anchor.removeChild(existing);
+      }
+      if (groupVolk.includes(i)) {
+        const existing = anchor.querySelector(".target-volk-content");
+        if (existing) anchor.removeChild(existing);
+      }
+    });
+  }
+};
+
 const onArReady = async (e) => {
   completePreloader();
 
   if (arSystem) return;
-  
-  const robotModel = document.querySelector("#robot");
-  const guitarModel = document.querySelector("#guitar");
+
+  const models = document.querySelectorAll(".models");
 
   const closeBtn = document.querySelector("#panoramaCloseBtn");
   const canvas = document.querySelector(".panorama");
@@ -29,11 +59,19 @@ const onArReady = async (e) => {
   panBtn.classList.remove("hidden");
 
   e.target.setAttribute("screenshot-ui", "");
-  robotModel.setAttribute("custom-animation", "");
-  guitarModel.setAttribute("custom-animation", "");
+
+  models.forEach((model) => {
+    model.setAttribute("custom-animation", "");
+  });
 
   await preloadTextures(config.panoList);
-  startPanorama();
+
+  startPanorama(true);
+  // e.target.addEventListener("deviceorientationpermissionrequested", (e) => {
+  // });
+  // e.target.addEventListener("deviceorientationpermissionrejected", () => {
+  //   startPanorama(false);
+  // });
 
   panBtn.addEventListener("click", () => {
     arSystem.stop();
@@ -47,6 +85,7 @@ const onArReady = async (e) => {
 document.addEventListener("DOMContentLoaded", () => {
   initPreloader();
   initScanner();
+  setContent();
 
   const sceneEl = document.querySelector("a-scene");
   sceneEl.addEventListener("arReady", onArReady);

@@ -73,7 +73,7 @@ const setPanorama = (index) => {
 //
 // Запуск панорамы
 //
-const startPanorama = () => {
+const startPanorama = (isOrientationGranted) => {
   // сцена
   scene = new THREE.Scene();
 
@@ -111,8 +111,12 @@ const startPanorama = () => {
   scene.add(sphere);
 
   // управление
-  const controls = new DeviceOrientationControls(camera);
-  // const controls = new OrbitControls(camera, renderer.domElement); //для теста с ПК/ноута
+  let controls;
+  if (isOrientationGranted) {
+    controls = new DeviceOrientationControls(camera);
+  } else {
+    controls = new OrbitControls(camera, renderer.domElement); //для теста с ПК/ноута
+  }
   controls.enableDamping = true;
 
   // анимация
