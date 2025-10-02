@@ -27,15 +27,18 @@ const volkTemplate = `
 
 const trioTemplate = `
     <a-entity class="target-trio-content">
+
+     <!-- Ящик -->
       <a-entity class="models" animation-mixer="clip: box_idle_01; loop: repeat" gltf-model="#boxModel"
         rotation="0 0 0" position="0 -.5 0" scale="0.6 0.6 0.6"></a-entity>
 
-      <a-entity class="models" gltf-model="#rogatkaModel" rotation="-90 0 0" position="0.3 0.3 0"
-        scale="3 3 3"></a-entity>
+        <!-- Рогатка -->
+      <a-entity class="models" gltf-model="#rogatkaModel" rotation="-115 30 0" position="0.32 -0.5 0"
+        scale="2.5 2.5 2.5"></a-entity>
 
+         <!-- Тыква -->
       <a-entity class="models" gltf-model="#tikvaModel" rotation="0 0 0" position="-0.5 -0.5 0"
         scale="0.4 0.4 0.4"></a-entity>
-
       <a-entity light="type: ambient; intensity: 1.2; color: #ffffff"></a-entity>
       <a-entity light="type: directional; intensity: 1.5; castShadow: true" position="1 4 3"
         shadow-map-width="1024" shadow-map-height="1024"></a-entity>

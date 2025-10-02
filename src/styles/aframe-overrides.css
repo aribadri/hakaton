@@ -93,11 +93,23 @@
 
 .a-loader-title{
   display: none !important;
-
+  
 }
+
+
+
 .a-loader{
   display: none !important;
 
+}
+
+.mindar-ui-overlay, .mindar-ui-compatibility {
+  display: none !important;
+
+}
+
+.a-scene{
+  background: #000;
 }
 
 /* Mobile responsive */

@@ -11,7 +11,8 @@
   },
   "devDependencies": {
     "vite": "^5.0.2",
-    "vercel": "^48.1.6"
+    "vercel": "^48.1.6",
+    "vite-plugin-mkcert": "^1.17.6"
   },
   "dependencies": {
     "gsap": "^3.13.0",

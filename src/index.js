@@ -64,6 +64,7 @@ const onArReady = async (e) => {
   quizBtn.classList.remove("hidden");
 
   e.target.setAttribute("screenshot-ui", "");
+  e.target.renderer.setClearColor(0x000000, 0);
 
   models.forEach((model) => {
     model.setAttribute("custom-animation", "");

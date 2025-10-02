@@ -1,24 +1,14 @@
 import { defineConfig } from "vite";
-import fs from "fs";
-import path from "path";
+import mkcert from "vite-plugin-mkcert";
 
 export default defineConfig(({ command }) => {
-  const isDev = command === "serve";
-
   return {
     root: "src/",
     publicDir: "../static/",
     base: "./",
+    plugins: [mkcert()],
     server: {
       host: true,
-      ...(isDev && {
-        https: {
-          key: fs.readFileSync(
-            path.resolve(__dirname, "certs/localhost-key.pem")
-          ),
-          cert: fs.readFileSync(path.resolve(__dirname, "certs/localhost.pem")),
-        },
-      }),
     },
     build: {
       outDir: "../dist",
