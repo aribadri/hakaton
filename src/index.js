@@ -71,15 +71,29 @@ const onArReady = async (e) => {
 
   await preloadTextures(config.panoList);
 
-  startPanorama(true);
-  // e.target.addEventListener("deviceorientationpermissionrequested", (e) => {
-  // });
-  // e.target.addEventListener("deviceorientationpermissionrejected", () => {
-  //   startPanorama(false);
-  // });
+  let panoramaInitialized = false;
 
-  panBtn.addEventListener("click", () => {
+  panBtn.addEventListener("click", async () => {
     arSystem.stop();
+
+    if (!panoramaInitialized) {
+      panoramaInitialized = true;
+
+      let hasPermission = true;
+      if (typeof DeviceOrientationEvent !== 'undefined' &&
+        typeof DeviceOrientationEvent.requestPermission === 'function') {
+        try {
+          const response = await DeviceOrientationEvent.requestPermission();
+          hasPermission = response === 'granted';
+        } catch (error) {
+          console.error('Permission request failed:', error);
+          hasPermission = false;
+        }
+      }
+
+      startPanorama(hasPermission);
+    }
+
     closeBtn.classList.remove("hidden");
     canvas.classList.remove("hidden");
     leftBTN.classList.remove("hidden");
@@ -91,6 +105,21 @@ document.addEventListener("DOMContentLoaded", () => {
   initPreloader();
   initScanner();
   setContent();
+
+  const landscapeWarning = document.getElementById('landscapeWarning');
+
+  const checkOrientation = () => {
+    if (window.matchMedia("(orientation: landscape)").matches) {
+      landscapeWarning.classList.remove('hidden');
+    } else {
+      landscapeWarning.classList.add('hidden');
+    }
+  };
+
+  checkOrientation();
+
+  window.addEventListener('resize', checkOrientation);
+  window.addEventListener('orientationchange', checkOrientation);
 
   // Quiz
   const quiz = new Quiz();

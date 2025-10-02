@@ -9,6 +9,7 @@
   <meta name="theme-color" content="#726de3" />
 
   <title>СоюзМультПарк</title>
+  <link rel="stylesheet" href="styles/fonts.css">
   <link rel="stylesheet" href="styles/variables.css">
   <link rel="stylesheet" href="styles/layout.css">
   <link rel="stylesheet" href="styles/buttons.css">
@@ -31,6 +32,14 @@
 <body>
   <div id="loader" class="loading-overlay hidden">
     <div class="spinner" role="status" aria-label="Загрузка"></div>
+  </div>
+
+  <div id="landscapeWarning" class="landscape-warning hidden">
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="5" width="18" height="14" rx="2" stroke="white" stroke-width="2"/>
+      <path d="M8 2L12 5L16 2" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <p>Переверните телефон<br>в вертикальное положение</p>
   </div>
 
   <button id="quizBtn" class="hidden quiz-trigger-btn">

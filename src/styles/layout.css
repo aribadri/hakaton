@@ -7,6 +7,7 @@ body {
   padding: 0;
   margin: 0;
   background: transparent;
+  font-family: 'Creata', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 /* A-Frame scene background */
@@ -104,10 +105,10 @@ a-scene canvas {
   gap: 16px;
   background: rgba(114, 109, 227, 0.95);
   backdrop-filter: blur(10px);
-  padding: 18px 24px;
+  padding: 16px 22px;
   border-radius: 16px;
   color: white;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   line-height: 1.4;
   text-align: left;
@@ -161,6 +162,39 @@ a-scene canvas {
 
 .loading-overlay.hidden {
   display: none !important;
+}
+
+/* Landscape */
+.landscape-warning {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  background: var(--primary);
+  z-index: 4000;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.landscape-warning.hidden {
+  display: none !important;
+}
+
+.landscape-warning p {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (orientation: portrait) {
+  .landscape-warning {
+    display: none !important;
+  }
 }
 
 /* Spinner */
