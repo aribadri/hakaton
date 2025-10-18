@@ -80,6 +80,7 @@ const getScreenshot = {
     const shareBtn = btns.querySelector("#shareBtn");
     const saveBtn = btns.querySelector("#saveBtn");
     const filesBtn = btns.querySelector("#filesBtn");
+    const maskBtn = document.querySelector("#maskBtn");
 
     let lastDataUrl = null;
 
@@ -176,6 +177,9 @@ const getScreenshot = {
       shareBtn.classList.remove("hidden");
       saveBtn.classList.remove("hidden");
       filesBtn.classList.add("hidden");
+
+      // Hide mask button when photo is taken
+      if (maskBtn) maskBtn.classList.add("hidden");
     });
 
     //
@@ -262,6 +266,9 @@ const getScreenshot = {
       saveBtn.classList.add("hidden");
       filesBtn.classList.add("hidden");
       backBtn.classList.add("hidden");
+
+      // Show mask button when returning to AR mode
+      if (maskBtn) maskBtn.classList.remove("hidden");
     });
   },
 };

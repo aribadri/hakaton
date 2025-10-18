@@ -8,6 +8,7 @@ import {
 } from "./components/preloader/preloader.js";
 import { initScanner } from "./components/scanner/scanner.js";
 import { Quiz } from "./components/quiz/quiz.js";
+import { initMask, showMask, hideMask } from "./components/mask/mask.js";
 
 AFRAME.registerComponent("screenshot-ui", getScreenshot);
 AFRAME.registerComponent("custom-animation", animate);
@@ -96,10 +97,14 @@ const onArReady = async (e) => {
   const rightBTN = document.querySelector(".btn-right");
   const leftBTN = document.querySelector(".btn-left");
   const panBtn = document.querySelector("#panoramaBtn");
+  const maskBtn = document.querySelector("#maskBtn");
 
   arSystem = e.target.systems["mindar-image-system"];
 
   panBtn.classList.remove("hidden");
+
+  // Mask button - show in AR mode
+  maskBtn.classList.remove("hidden");
 
   // Quiz button
   const quizBtn = document.querySelector("#quizBtn");
@@ -141,12 +146,21 @@ const onArReady = async (e) => {
     canvas.classList.remove("hidden");
     leftBTN.classList.remove("hidden");
     rightBTN.classList.remove("hidden");
+
+    // Hide mask button when panorama is open
+    maskBtn.classList.add("hidden");
+  });
+
+  // Mask button click handler
+  maskBtn.addEventListener("click", () => {
+    showMask();
   });
 };
 
 document.addEventListener("DOMContentLoaded", () => {
   initPreloader();
   initScanner();
+  initMask();
   setContent();
 
   const landscapeWarning = document.getElementById('landscapeWarning');
