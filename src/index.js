@@ -13,6 +13,22 @@ AFRAME.registerComponent("screenshot-ui", getScreenshot);
 AFRAME.registerComponent("custom-animation", animate);
 
 let arSystem;
+let activeTargetsCount = 0;
+let scannerTimeout = null;
+
+const showScanner = () => {
+  const scanner = document.querySelector("#custom-scanner");
+  if (scanner) {
+    scanner.classList.remove("hidden");
+  }
+};
+
+const hideScanner = () => {
+  const scanner = document.querySelector("#custom-scanner");
+  if (scanner) {
+    scanner.classList.add("hidden");
+  }
+};
 
 const setContent = () => {
   const groupTrio = [0, 1, 2, 3];
@@ -21,6 +37,15 @@ const setContent = () => {
   for (let i = 0; i <= 6; i++) {
     const anchor = document.querySelector("#anchor-" + i);
     anchor.addEventListener("targetFound", () => {
+      activeTargetsCount++;
+
+      if (scannerTimeout) {
+        clearTimeout(scannerTimeout);
+        scannerTimeout = null;
+      }
+
+      hideScanner();
+
       if (groupTrio.includes(i)) {
         anchor.insertAdjacentHTML("beforeend", config.trioTemplate);
       }
@@ -30,6 +55,9 @@ const setContent = () => {
     });
 
     anchor.addEventListener("targetLost", () => {
+      // Уменьшаем счетчик активных таргетов
+      activeTargetsCount--;
+
       if (groupTrio.includes(i)) {
         const existing = anchor.querySelector(".target-trio-content");
         if (existing) anchor.removeChild(existing);
@@ -37,6 +65,20 @@ const setContent = () => {
       if (groupVolk.includes(i)) {
         const existing = anchor.querySelector(".target-volk-content");
         if (existing) anchor.removeChild(existing);
+      }
+
+      // Если нет активных таргетов, запускаем таймаут на показ сканера
+      if (activeTargetsCount <= 0) {
+        activeTargetsCount = 0; 
+
+        if (scannerTimeout) {
+          clearTimeout(scannerTimeout);
+        }
+
+        scannerTimeout = setTimeout(() => {
+          showScanner();
+          scannerTimeout = null;
+        }, 1000);
       }
     });
   }
