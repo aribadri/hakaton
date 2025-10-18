@@ -103,9 +103,9 @@ const getScreenshot = {
       const vh = video.videoHeight;
       if (!vw || !vh) return;
 
-      // итоговый канвас (под размеры экрана устройства, а не всего видео!)
-      const cw = window.innerWidth;
-      const ch = window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const cw = window.innerWidth * dpr;
+      const ch = window.innerHeight * dpr;
 
       const out = document.createElement("canvas");
       out.width = cw;
@@ -147,6 +147,7 @@ const getScreenshot = {
         canvas: arCanvas,
         alpha: true,
         preserveDrawingBuffer: true,
+        antialias: true,
       });
       arRenderer.setSize(cw, ch, false);
       arRenderer.setViewport(0, 0, cw, ch);
