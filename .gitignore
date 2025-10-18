@@ -161,3 +161,6 @@ out
 
 .vite
 .vercel
+
+# Presentation files
+PRESENTATION_BRIEF.md
