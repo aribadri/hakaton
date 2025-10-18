@@ -14,7 +14,6 @@ export const initMask = () => {
 
   document.body.insertAdjacentHTML('afterbegin', markup);
 
-  // Добавляем обработчик закрытия
   const closeBtn = document.getElementById('maskCloseBtn');
   closeBtn.addEventListener('click', hideMask);
 
@@ -29,7 +28,6 @@ export const showMask = () => {
     maskContainer.classList.remove('hidden');
   }
 
-  // Hide mask button when container is open
   if (maskBtn) {
     maskBtn.classList.add('hidden');
   }
@@ -43,7 +41,6 @@ export const hideMask = () => {
     maskContainer.classList.add('hidden');
   }
 
-  // Show mask button when container is closed
   if (maskBtn) {
     maskBtn.classList.remove('hidden');
   }
