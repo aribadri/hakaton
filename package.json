@@ -10,8 +10,8 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^5.0.2",
     "vercel": "^48.1.6",
+    "vite": "^5.0.2",
     "vite-plugin-mkcert": "^1.17.6"
   },
   "dependencies": {

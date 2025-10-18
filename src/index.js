@@ -1,5 +1,6 @@
 import { getScreenshot } from "./components/screenshot.js";
 import { animate } from "./components/animation.js";
+
 import { preloadTextures, startPanorama } from "./panorama";
 import config from "./config.js";
 import {
@@ -9,6 +10,9 @@ import {
 import { initScanner } from "./components/scanner/scanner.js";
 import { Quiz } from "./components/quiz/quiz.js";
 import { initMask, showMask, hideMask } from "./components/mask/mask.js";
+import { startMask, stopMask } from "./mask.js";
+
+let faceMode = false;
 
 AFRAME.registerComponent("screenshot-ui", getScreenshot);
 AFRAME.registerComponent("custom-animation", animate);
@@ -86,6 +90,14 @@ const setContent = () => {
 };
 
 const onArReady = async (e) => {
+  // startMask()
+  // if (arSystem) {
+  //   await arSystem.stop(); // Останавливаем image tracking
+  // }
+  // document.querySelector("#scene-image").classList.add("hidden");
+  // startMask(); // Запускаем face tracking с маской
+  // return
+
   completePreloader();
 
   if (arSystem) return;
@@ -128,13 +140,15 @@ const onArReady = async (e) => {
       panoramaInitialized = true;
 
       let hasPermission = true;
-      if (typeof DeviceOrientationEvent !== 'undefined' &&
-        typeof DeviceOrientationEvent.requestPermission === 'function') {
+      if (
+        typeof DeviceOrientationEvent !== "undefined" &&
+        typeof DeviceOrientationEvent.requestPermission === "function"
+      ) {
         try {
           const response = await DeviceOrientationEvent.requestPermission();
-          hasPermission = response === 'granted';
+          hasPermission = response === "granted";
         } catch (error) {
-          console.error('Permission request failed:', error);
+          console.error("Permission request failed:", error);
           hasPermission = false;
         }
       }
@@ -163,20 +177,20 @@ document.addEventListener("DOMContentLoaded", () => {
   initMask();
   setContent();
 
-  const landscapeWarning = document.getElementById('landscapeWarning');
+  const landscapeWarning = document.getElementById("landscapeWarning");
 
   const checkOrientation = () => {
     if (window.matchMedia("(orientation: landscape)").matches) {
-      landscapeWarning.classList.remove('hidden');
+      landscapeWarning.classList.remove("hidden");
     } else {
-      landscapeWarning.classList.add('hidden');
+      landscapeWarning.classList.add("hidden");
     }
   };
 
   checkOrientation();
 
-  window.addEventListener('resize', checkOrientation);
-  window.addEventListener('orientationchange', checkOrientation);
+  window.addEventListener("resize", checkOrientation);
+  window.addEventListener("orientationchange", checkOrientation);
 
   // Quiz
   const quiz = new Quiz();
@@ -195,8 +209,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  const sceneEl = document.querySelector("a-scene");
+  const sceneEl = document.querySelector("#scene-image");
   sceneEl.addEventListener("arReady", onArReady);
+
+
+  // _____ПЕРЕКЛЮЧАЕМ РЕЖИМ С IMAGE на FACE___________
+  // const toggleBtn = document.querySelector("#changeARModeBtn");
+  // toggleBtn.addEventListener("click", async () => {
+  //   if (!faceMode) {
+  //     if (arSystem) await arSystem.pause();
+  //     // sceneEl.classList.add("hidden");
+  //     await startMask(); // запускаем маску
+  //     faceMode = true;
+  //     toggleBtn.textContent = "Вернуться в AR";
+  //   } else {
+  //     await stopMask(); // выключаем маску
+  //     arSystem.unpause();
+  //     // sceneEl.classList.remove("hidden");
+  //     faceMode = false;
+  //     toggleBtn.textContent = "Маска";
+  //   }
+  // });
 
   const observer = new MutationObserver(() => {
     const dialogText = document.querySelector(".a-dialog-text");

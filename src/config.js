@@ -2,6 +2,7 @@ const panoList = [
   "textures/panorama1.jpg",
   "textures/panorama2.jpg",
   "textures/panorama3.jpg",
+  "textures/panorama4.jpg",
 ];
 
 const volkTemplate = `
@@ -37,8 +38,12 @@ const trioTemplate = `
         scale="2.5 2.5 2.5"></a-entity>
 
          <!-- Тыква -->
-      <a-entity class="models" gltf-model="#tikvaModel" rotation="0 0 0" position="-0.5 -0.5 0"
+      <a-entity class="models" gltf-model="#heliModel" animation-mixer="clip: arm_helicopter_fly; loop: repeat" rotation="0 -45 0" position="-0.5 .5 0"
+        scale="0.6 0.6 0.6"></a-entity>
+        
+            <a-entity class="models" gltf-model="#icecreamModel" rotation="0 45 0" position="-0.5 -0.5 0"
         scale="0.4 0.4 0.4"></a-entity>
+
       <a-entity light="type: ambient; intensity: 1.2; color: #ffffff"></a-entity>
       <a-entity light="type: directional; intensity: 1.5; castShadow: true" position="1 4 3"
         shadow-map-width="1024" shadow-map-height="1024"></a-entity>

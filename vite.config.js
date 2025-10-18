@@ -11,6 +11,7 @@ export default defineConfig(({ command }) => {
       host: true,
       https: true, // Включаем HTTPS для работы камеры на мобильных
     },
+    assetsInclude: ["**/*.glb"],
     build: {
       outDir: "../dist",
       emptyOutDir: true,

@@ -1,4 +1,16 @@
-import * as THREE from "three";
+// import * as THREE from "three";
+import {
+  LoadingManager,
+  Scene,
+  DoubleSide,
+  PerspectiveCamera,
+  SRGBColorSpace,
+  WebGLRenderer,
+  TextureLoader,
+  Mesh,
+  MeshBasicMaterial,
+  SphereGeometry,
+} from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import DeviceOrientationControls from "./DeviceOrientationControls";
 import gsap from "gsap";
@@ -8,7 +20,7 @@ let currentIndex = 0;
 let sphere = null;
 let scene = null;
 
-const mindarScene = document.querySelector("a-scene");
+const mindarScene = document.querySelector("#scene-image");
 const closeBtn = document.querySelector("#panoramaCloseBtn");
 const devicePixelRatio = Math.min(window.devicePixelRatio, 2);
 const canvas = document.querySelector(".panorama");
@@ -32,8 +44,8 @@ closeBtn.addEventListener("click", () => {
 // Предзагрузка текстур (Promise)
 const preloadTextures = (paths) => {
   return new Promise((resolve, reject) => {
-    const manager = new THREE.LoadingManager(resolve, undefined, reject);
-    const loader = new THREE.TextureLoader(manager);
+    const manager = new LoadingManager(resolve, undefined, reject);
+    const loader = new TextureLoader(manager);
     textures = paths.map((path) => loader.load(path));
   });
 };
@@ -46,7 +58,7 @@ const setPanorama = (index) => {
   const newIndex = (index + textures.length) % textures.length;
   if (newIndex === currentIndex) return;
 
-  const newSphere = new THREE.Mesh(
+  const newSphere = new Mesh(
     sphere.geometry.clone(),
     new THREE.MeshBasicMaterial({
       map: textures[newIndex],
@@ -79,10 +91,10 @@ const setPanorama = (index) => {
 //
 const startPanorama = (isOrientationGranted) => {
   // сцена
-  scene = new THREE.Scene();
+  scene = new Scene();
 
   // камера
-  const camera = new THREE.PerspectiveCamera(
+  const camera = new PerspectiveCamera(
     55,
     window.innerWidth / window.innerHeight,
     0.1,
@@ -91,7 +103,7 @@ const startPanorama = (isOrientationGranted) => {
   camera.position.set(0, 1, 0);
 
   // рендерер
-  const renderer = new THREE.WebGLRenderer({
+  const renderer = new WebGLRenderer({
     preserveDrawingBuffer: true,
     antialias: true,
     canvas,
@@ -99,15 +111,15 @@ const startPanorama = (isOrientationGranted) => {
     powerPreference: "high-performance",
   });
   renderer.setPixelRatio(devicePixelRatio);
-  renderer.outputEncoding = THREE.SRGBColorSpace;
+  renderer.outputEncoding = SRGBColorSpace;
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   // первая сфера
-  sphere = new THREE.Mesh(
-    new THREE.SphereGeometry(20, 32, 16),
-    new THREE.MeshBasicMaterial({
+  sphere = new Mesh(
+    new SphereGeometry(20, 32, 16),
+    new MeshBasicMaterial({
       map: textures[0],
-      side: THREE.DoubleSide,
+      side: DoubleSide,
       transparent: true,
       opacity: 1,
     })

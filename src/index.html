@@ -11,6 +11,7 @@
   <title>СоюзМультПарк</title>
   <link rel="stylesheet" href="styles/fonts.css">
   <link rel="stylesheet" href="styles/variables.css">
+  <link rel="stylesheet" href="./global.css">
   <link rel="stylesheet" href="styles/layout.css">
   <link rel="stylesheet" href="styles/buttons.css">
   <link rel="stylesheet" href="styles/aframe-overrides.css">
@@ -18,27 +19,39 @@
   <link rel="stylesheet" href="components/scanner/scanner.css">
   <link rel="stylesheet" href="components/quiz/quiz.css">
   <link rel="stylesheet" href="components/mask/mask.css">
+
+
   <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-face.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-face-aframe.prod.js"></script>
+
   <script src="https://unpkg.com/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image.prod.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image-aframe.prod.js"></script>
   <script crossorigin="anonymous"
     src="//cdn.8thwall.com/web/aframe/aframe-particle-system-component-1.1.4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
-  <script crossorigin="anonymous" type="module" src="index.js"></script>
-
+  <script type="module" src="index.js"></script>
 
 </head>
 
 <body>
+  <!-- <button id="changeARModeBtn" class="">Маска</button> -->
+
+  <!-- <div id="container-mask">
+  </div>
+  <video id="video-feed">
+  </video> -->
+
   <div id="loader" class="loading-overlay hidden">
     <div class="spinner" role="status" aria-label="Загрузка"></div>
   </div>
 
   <div id="landscapeWarning" class="landscape-warning hidden">
     <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="3" y="5" width="18" height="14" rx="2" stroke="white" stroke-width="2"/>
-      <path d="M8 2L12 5L16 2" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="3" y="5" width="18" height="14" rx="2" stroke="white" stroke-width="2" />
+      <path d="M8 2L12 5L16 2" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
     <p>Переверните телефон<br>в вертикальное положение</p>
   </div>
@@ -80,7 +93,7 @@
 
 
 
-  <a-scene mindar-image-system="videoSettings: { facingMode: 'environment', width: 1280, height: 720 }"
+  <a-scene id="scene-image" mindar-image-system="videoSettings: { facingMode: 'environment', width: 1280, height: 720 }"
     mindar-image="imageTargetSrc: targets/targets-5.mind; filterMinCF:0.00001; uiLoading:#loader; uiScanning: #custom-scanner; filterBeta: 0.001"
     renderer="alpha: true; colorManagement: true; shadow: true" vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: true">
@@ -91,6 +104,11 @@
       <a-asset-item id="boxModel" src="models/box_anim.glb"></a-asset-item>
       <a-asset-item id="rogatkaModel" src="models/rogatka_noanim.glb"></a-asset-item>
       <a-asset-item id="tikvaModel" src="models/tikva.glb"></a-asset-item>
+
+      <a-asset-item id="heliModel" src="models/blue_helicopter_01.glb"></a-asset-item>
+      <a-asset-item id="icecreamModel" src="models/ice_cream_01.glb"></a-asset-item>
+
+
       <img id="bblTexture" src="textures/bbl.png" />
     </a-assets>
 
