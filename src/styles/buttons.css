@@ -189,18 +189,18 @@
 /* VK Share Button - Special Styling */
 .vk-share-btn {
   width: auto !important;
-  padding: 0 20px !important;
+  padding: 12px 20px !important;
   gap: 10px;
-  background: linear-gradient(135deg, #0077FF 0%, #005DD9 100%) !important;
+  background: var(--primary) !important;
   border: none !important;
-  border-radius: 50px !important;
-  box-shadow: 0 4px 12px rgba(0, 119, 255, 0.4) !important;
-  transition: all 0.2s ease !important;
+  border-radius: var(--border-radius) !important;
+  box-shadow: 0 4px 12px rgba(114, 109, 227, 0.3) !important;
+  transition: all var(--transition) !important;
 }
 
 .vk-share-btn:active {
-  transform: scale(0.96);
-  box-shadow: 0 2px 8px rgba(0, 119, 255, 0.5) !important;
+  transform: scale(0.95);
+  box-shadow: 0 2px 8px rgba(114, 109, 227, 0.4) !important;
 }
 
 .vk-share-btn svg {
