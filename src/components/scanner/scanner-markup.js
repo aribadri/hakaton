@@ -11,6 +11,12 @@ export const createScannerMarkup = () => {
           <!-- Тонкая сканирующая линия -->
           <div class="scan-line"></div>
         </div>
+
+        <!-- Контент с текстом -->
+        <div class="scanner-content">
+          <div class="scanner-text">Наведите камеру</div>
+          <div class="scanner-subtext">на скульптуру СоюзМультПарка</div>
+        </div>
       </div>
     </div>
   `;
