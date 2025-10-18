@@ -14,6 +14,13 @@ const getScreenshot = {
     btns.className = "btns";
     btns.innerHTML = `
       <button id="captureBtn"></button>
+      <button id="vkBtn" class="vk-share-btn hidden">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93V15.07C2 20.67 3.33 22 8.93 22H15.07C20.67 22 22 20.67 22 15.07V8.93C22 3.33 20.67 2 15.07 2Z" fill="#0077FF"/>
+          <path d="M16.5 15.45C16.14 15.45 15.48 15.24 14.43 14.19C13.46 13.22 13.05 13.08 12.78 13.08C12.41 13.08 12.31 13.18 12.31 13.68V15.08C12.31 15.45 12.19 15.7 11.29 15.7C9.84 15.7 8.23 14.83 7.05 13.29C5.32 11.06 4.7 9.14 4.7 8.74C4.7 8.47 4.8 8.22 5.3 8.22H6.7C7.13 8.22 7.29 8.42 7.46 8.87C8.27 11.05 9.57 12.92 10.09 12.92C10.3 12.92 10.4 12.82 10.4 12.26V10.01C10.34 8.92 9.83 8.82 9.83 8.42C9.83 8.22 10 8.02 10.27 8.02H12.73C13.08 8.02 13.21 8.19 13.21 8.83V11.71C13.21 12.06 13.36 12.19 13.48 12.19C13.69 12.19 13.88 12.06 14.27 11.67C15.37 10.43 16.16 8.53 16.16 8.53C16.28 8.28 16.48 8.02 16.91 8.02H18.31C18.82 8.02 18.94 8.29 18.82 8.83C18.62 9.84 16.89 12.25 16.89 12.25C16.73 12.51 16.67 12.63 16.89 12.93C17.04 13.15 17.58 13.59 17.93 14C18.68 14.84 19.29 15.56 19.45 16.06C19.61 16.56 19.35 16.81 18.8 16.81H17.4C16.97 16.81 16.78 16.56 16.5 15.45Z" fill="white"/>
+        </svg>
+        <span>Поделиться в VK</span>
+      </button>
       <button id="shareBtn" class="hidden">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 16V4M12 4L8 8M12 4L16 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -41,14 +48,18 @@ const getScreenshot = {
     const resultImg = document.createElement("img");
     resultImg.id = "resultImg";
 
-    // CTA плашка
+    // CTA плашка с конкурсом
     const ctaBanner = document.createElement("div");
     ctaBanner.className = "cta-banner";
     ctaBanner.innerHTML = `
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15M9 5C9 6.10457 9.89543 7 11 7H13C14.1046 7 15 6.10457 15 5M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5M12 12H15M12 16H15M9 12H9.01M9 16H9.01" stroke="white" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <span>Предъяви фото на кассе и получи скидку 10%</span>
+      <div class="cta-content">
+        <div class="cta-icon">🎁</div>
+        <div class="cta-text">
+          <div class="cta-title">Выиграй приз!</div>
+          <div class="cta-subtitle">Поделись фото ВКонтакте с хештегом #СоюзМультПарк</div>
+          <div class="cta-info">Подробности на кассе</div>
+        </div>
+      </div>
     `;
 
     const backBtn = document.createElement("button");
@@ -66,6 +77,7 @@ const getScreenshot = {
 
     // ссылки
     const captureBtn = btns.querySelector("#captureBtn");
+    const vkBtn = btns.querySelector("#vkBtn");
     const shareBtn = btns.querySelector("#shareBtn");
     const saveBtn = btns.querySelector("#saveBtn");
     const filesBtn = btns.querySelector("#filesBtn");
@@ -160,13 +172,46 @@ const getScreenshot = {
 
       // переключение кнопок
       captureBtn.classList.add("hidden");
+      vkBtn.classList.remove("hidden");
       shareBtn.classList.remove("hidden");
       saveBtn.classList.remove("hidden");
       filesBtn.classList.add("hidden");
     });
 
     //
-    // 🔗 Поделиться
+    // 💙 Поделиться в VK
+    //
+    vkBtn.addEventListener("click", async () => {
+      if (!lastDataUrl) return;
+
+      // Текст для поста с хештегом
+      const shareText = encodeURIComponent("Я создал AR-фото в СоюзМультПарке! 🎬✨ #СоюзМультПарк #ВДНХ #AR");
+
+      // Попытка использовать Web Share API (если доступно)
+      const blob = await (await fetch(lastDataUrl)).blob();
+      const file = new File([blob], "СоюзМультПарк-AR.jpg", { type: "image/jpeg" });
+
+      if (navigator.canShare && navigator.canShare({ files: [file], text: shareText })) {
+        try {
+          await navigator.share({
+            files: [file],
+            text: "Я создал AR-фото в СоюзМультПарке! 🎬✨ #СоюзМультПарк #ВДНХ #AR",
+            title: "СоюзМультПарк AR"
+          });
+        } catch (err) {
+          // Если пользователь отменил или ошибка - открываем VK напрямую
+          if (err.name !== 'AbortError') {
+            window.open(`https://vk.com/share.php?url=${encodeURIComponent(window.location.href)}&title=${shareText}`, '_blank');
+          }
+        }
+      } else {
+        // Fallback: открываем VK share dialog
+        window.open(`https://vk.com/share.php?url=${encodeURIComponent(window.location.href)}&title=${shareText}`, '_blank');
+      }
+    });
+
+    //
+    // 🔗 Поделиться (другие соцсети)
     //
     shareBtn.addEventListener("click", async () => {
       if (!lastDataUrl) return;
@@ -212,6 +257,7 @@ const getScreenshot = {
       resultImgWrapper.classList.add("hidden");
       resultImg.src = "";
       captureBtn.classList.remove("hidden");
+      vkBtn.classList.add("hidden");
       shareBtn.classList.add("hidden");
       saveBtn.classList.add("hidden");
       filesBtn.classList.add("hidden");

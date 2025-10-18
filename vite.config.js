@@ -9,6 +9,7 @@ export default defineConfig(({ command }) => {
     plugins: [mkcert()],
     server: {
       host: true,
+      https: true, // Включаем HTTPS для работы камеры на мобильных
     },
     build: {
       outDir: "../dist",
