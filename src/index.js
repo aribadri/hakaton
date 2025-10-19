@@ -136,6 +136,15 @@ const onArReady = async (e) => {
 
   panBtn.addEventListener("click", async () => {
     arSystem.stop();
+    // add hidden
+    const group1 = document.querySelector(".target-trio-content");
+    const group2 = document.querySelector(".target-volk-content");
+    if (group2) {
+      group2.parentNode.removeChild(group2)
+    }
+    if (group1) {
+      group1.parentNode.removeChild(group1)
+    }
 
     if (!panoramaInitialized) {
       panoramaInitialized = true;
