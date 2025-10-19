@@ -133,8 +133,13 @@ const onArReady = async (e) => {
   await preloadTextures(config.panoList);
 
   let panoramaInitialized = false;
+  let panBtnListenerAdded = false;
+  let maskBtnListenerAdded = false;
 
-  panBtn.addEventListener("click", async () => {
+  // Добавляем обработчик только один раз
+  if (!panBtnListenerAdded) {
+    panBtnListenerAdded = true;
+    panBtn.addEventListener("click", async () => {
     arSystem.stop();
 
     if (!panoramaInitialized) {
@@ -163,18 +168,23 @@ const onArReady = async (e) => {
     rightBTN.classList.remove("hidden");
 
     maskBtn.classList.add("hidden");
-  });
+    });
+  }
 
-  maskBtn.addEventListener("click", async () => {
-    if (!faceMode) {
-      if (arSystem) await arSystem.pause();
-      hideScanner();
-      showMask();
-      await startFaceScene();
-      setMode("face");
-      faceMode = true;
-    }
-  });
+  // Добавляем обработчик только один раз
+  if (!maskBtnListenerAdded) {
+    maskBtnListenerAdded = true;
+    maskBtn.addEventListener("click", async () => {
+      if (!faceMode) {
+        if (arSystem) await arSystem.pause();
+        hideScanner();
+        showMask();
+        await startFaceScene();
+        setMode("face");
+        faceMode = true;
+      }
+    });
+  }
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -220,7 +230,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // _____ПЕРЕКЛЮЧАЕМ РЕЖИМ С IMAGE на FACE___________
   const maskCloseBtn = document.querySelector("#maskCloseBtn");
-  maskCloseBtn.addEventListener("click", async () => {
+
+  // Используем именованную функцию для возможности удаления listener
+  const handleMaskClose = async () => {
     if (faceMode) {
       await stopFaceScene();
       hideMask();
@@ -229,7 +241,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (arSystem) arSystem.unpause();
       faceMode = false;
     }
-  });
+  };
+
+  maskCloseBtn.addEventListener("click", handleMaskClose);
 
   const observer = new MutationObserver(() => {
     const dialogText = document.querySelector(".a-dialog-text");

@@ -19,6 +19,10 @@ let textures = []; // массив текстур
 let currentIndex = 0;
 let sphere = null;
 let scene = null;
+let animationFrameId = null;
+let renderer = null;
+let camera = null;
+let controls = null;
 
 const mindarScene = document.querySelector("#scene-image");
 const closeBtn = document.querySelector("#panoramaCloseBtn");
@@ -29,7 +33,55 @@ const leftBTN = document.querySelector(".btn-left");
 const maskBtn = document.querySelector("#maskBtn");
 const arSystem = mindarScene.systems["mindar-image-system"];
 
+const cleanupPanorama = () => {
+  // Останавливаем animation loop
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+  }
+
+  // Очищаем GSAP анимации
+  gsap.killTweensOf("*");
+
+  // Очищаем Three.js объекты
+  if (scene) {
+    scene.traverse((obj) => {
+      if (obj.geometry) {
+        obj.geometry.dispose();
+      }
+      if (obj.material) {
+        if (Array.isArray(obj.material)) {
+          obj.material.forEach(mat => {
+            if (mat.map) mat.map.dispose();
+            mat.dispose();
+          });
+        } else {
+          if (obj.material.map) obj.material.map.dispose();
+          obj.material.dispose();
+        }
+      }
+    });
+  }
+
+  // Очищаем controls
+  if (controls) {
+    if (controls.dispose) controls.dispose();
+    controls = null;
+  }
+
+  // Очищаем renderer
+  if (renderer) {
+    renderer.dispose();
+    renderer.forceContextLoss();
+    renderer = null;
+  }
+
+  sphere = null;
+};
+
 closeBtn.addEventListener("click", () => {
+  cleanupPanorama();
+
   arSystem.start();
   canvas.classList.add("hidden");
   leftBTN.classList.add("hidden");
@@ -60,9 +112,9 @@ const setPanorama = (index) => {
 
   const newSphere = new Mesh(
     sphere.geometry.clone(),
-    new THREE.MeshBasicMaterial({
+    new MeshBasicMaterial({
       map: textures[newIndex],
-      side: THREE.DoubleSide,
+      side: DoubleSide,
       transparent: true,
       opacity: 0,
     })
@@ -90,11 +142,14 @@ const setPanorama = (index) => {
 // Запуск панорамы
 //
 const startPanorama = (isOrientationGranted) => {
+  // Очищаем предыдущее состояние если оно есть
+  cleanupPanorama();
+
   // сцена
   scene = new Scene();
 
   // камера
-  const camera = new PerspectiveCamera(
+  camera = new PerspectiveCamera(
     55,
     window.innerWidth / window.innerHeight,
     0.1,
@@ -103,7 +158,7 @@ const startPanorama = (isOrientationGranted) => {
   camera.position.set(0, 1, 0);
 
   // рендерер
-  const renderer = new WebGLRenderer({
+  renderer = new WebGLRenderer({
     preserveDrawingBuffer: true,
     antialias: true,
     canvas,
@@ -127,7 +182,6 @@ const startPanorama = (isOrientationGranted) => {
   scene.add(sphere);
 
   // управление
-  let controls;
   if (isOrientationGranted) {
     controls = new DeviceOrientationControls(camera);
   } else {
@@ -137,7 +191,7 @@ const startPanorama = (isOrientationGranted) => {
 
   // анимация
   const animate = () => {
-    requestAnimationFrame(animate);
+    animationFrameId = requestAnimationFrame(animate);
     if (canvas.classList.contains("hidden")) return;
     controls.update();
     renderer.render(scene, camera);

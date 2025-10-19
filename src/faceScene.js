@@ -104,12 +104,89 @@ const pauseFaceScene = async () => {
 
 const stopFaceScene = async () => {
   if (!isInitialized) return;
+
+  isRunning = false; // Останавливаем рендер-цикл ПЕРВЫМ делом
+
+  // Останавливаем animation loop
+  if (mindarThree && mindarThree.renderer) {
+    mindarThree.renderer.setAnimationLoop(null);
+  }
+
+  // Останавливаем MindAR
   await mindarThree.stop();
-  // container.classList.add("hidden");
+
+  // Очищаем Three.js объекты
+  if (mindarThree) {
+    const { renderer, scene } = mindarThree;
+
+    // Удаляем все объекты из сцены
+    while (scene.children.length > 0) {
+      const object = scene.children[0];
+      scene.remove(object);
+
+      if (object.geometry) object.geometry.dispose();
+      if (object.material) {
+        if (Array.isArray(object.material)) {
+          object.material.forEach(mat => {
+            if (mat.map) mat.map.dispose();
+            mat.dispose();
+          });
+        } else {
+          if (object.material.map) object.material.map.dispose();
+          object.material.dispose();
+        }
+      }
+    }
+
+    // Очищаем renderer
+    if (renderer) {
+      renderer.dispose();
+      renderer.forceContextLoss();
+      const gl = renderer.getContext();
+      if (gl && gl.getExtension('WEBGL_lose_context')) {
+        gl.getExtension('WEBGL_lose_context').loseContext();
+      }
+    }
+  }
+
+  // Очищаем avatar GLTF объекты
+  if (avatar && avatar.gltf) {
+    avatar.gltf.scene.traverse((obj) => {
+      if (obj.geometry) obj.geometry.dispose();
+      if (obj.material) {
+        if (Array.isArray(obj.material)) {
+          obj.material.forEach(mat => {
+            if (mat.map) mat.map.dispose();
+            mat.dispose();
+          });
+        } else {
+          if (obj.material.map) obj.material.map.dispose();
+          obj.material.dispose();
+        }
+      }
+    });
+  }
+
+  // Останавливаем video stream
+  if (mindarThree && mindarThree.video && mindarThree.video.srcObject) {
+    const tracks = mindarThree.video.srcObject.getTracks();
+    tracks.forEach(track => track.stop());
+    mindarThree.video.srcObject = null;
+  }
+
+  // Очищаем container
+  if (container) {
+    container.classList.add("hidden");
+    // Удаляем canvas из контейнера
+    const canvas = container.querySelector('canvas');
+    if (canvas && canvas.parentNode) {
+      canvas.parentNode.removeChild(canvas);
+    }
+  }
+
   mindarThree = null;
   avatar = null;
   isInitialized = false;
-  isRunning = false;
 };
 
 export const getFaceRenderer = () => mindarThree?.renderer;
