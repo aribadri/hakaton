@@ -83,6 +83,7 @@ const getScreenshot = {
     const saveBtn = btns.querySelector("#saveBtn");
     const filesBtn = btns.querySelector("#filesBtn");
     const maskBtn = document.querySelector("#maskBtn");
+    const maskCloseBtn = document.querySelector("#maskCloseBtn");
 
     let lastDataUrl = null;
 
@@ -178,6 +179,7 @@ const getScreenshot = {
         filesBtn.classList.add("hidden");
 
         if (maskBtn) maskBtn.classList.add("hidden");
+        if (maskCloseBtn) maskCloseBtn.classList.add("hidden");
       } else {
         const video = sceneEl.systems["mindar-image-system"]?.video;
         const renderer = sceneEl.renderer;
@@ -363,8 +365,10 @@ const getScreenshot = {
       filesBtn.classList.add("hidden");
       backBtn.classList.add("hidden");
 
-      // Show mask button when returning to AR mode
-      if (maskBtn) maskBtn.classList.remove("hidden");
+      const mode = getMode();
+      if (mode === "face" && maskCloseBtn) {
+        maskCloseBtn.classList.remove("hidden");
+      }
     });
   },
 };

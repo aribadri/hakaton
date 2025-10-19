@@ -7,7 +7,7 @@ export const initMask = () => {
         </svg>
       </button>
         <video id="video-feed">
-  </video> 
+  </video>
       <div class="mask-content">
         <!-- Здесь будет контент маски -->
       </div>
@@ -15,9 +15,6 @@ export const initMask = () => {
   `;
 
   document.body.insertAdjacentHTML("afterbegin", markup);
-
-  const closeBtn = document.getElementById("maskCloseBtn");
-  closeBtn.addEventListener("click", hideMask);
 
   return document.getElementById("mask-container");
 };
