@@ -117,4 +117,12 @@ export const getFaceCamera = () => mindarThree?.camera;
 export const getFaceVideo = () => mindarThree?.video;
 export const getFaceScene = () => mindarThree?.scene;
 
+export const renderFaceFrame = () => {
+  if (!mindarThree || !isRunning) return;
+  const { renderer, scene, camera } = mindarThree;
+  const estimate = mindarThree.getLatestEstimate();
+  if (estimate?.blendshapes && avatar) avatar.updateBlendshapes(estimate.blendshapes);
+  renderer.render(scene, camera);
+};
+
 export { startFaceScene, pauseFaceScene, stopFaceScene };
