@@ -15,6 +15,7 @@ const volkTemplate = `
         rotation="0 -60 0" position="0.75 -0.5 0" scale="0.75 0.75 0.75" shadow="cast: true; receive: true">
         <a-light type="point" color="white" position="0 3 0" intensity="0.5"></a-light>
         <a-plane src="#bblTexture" rotation="0 60 0" position="0 1.6 0" scale="1 0.6 0.01"
+
           transparent="true"></a-plane>
       </a-entity>
 
@@ -29,13 +30,24 @@ const volkTemplate = `
 const trioTemplate = `
     <a-entity class="target-trio-content">
 
+     <!-- Указатель -->
+
+       <a-plane
+  src="#arrowTexture"
+  rotation="0 15 0"
+  position="0.9 0 0"
+  scale="0.7 1.3 0.01"
+  transparent="true"
+  animation="property: rotation; to: 0 -15 0; dir:alternate; dur: 1200; loop: true; easing: linear">
+</a-plane>
+
      <!-- Ящик -->
       <a-entity class="models" animation-mixer="clip: box_idle_01; loop: repeat" gltf-model="#boxModel"
         rotation="0 0 0" position="0 -.5 0" scale="0.6 0.6 0.6"></a-entity>
 
         <!-- Рогатка -->
-      <a-entity class="models" gltf-model="#rogatkaModel" rotation="-115 30 0" position="0.32 -0.5 0"
-        scale="2.5 2.5 2.5"></a-entity>
+      <a-entity class="models" gltf-model="#rogatkaModel" rotation="-115 30 0" position="0.4 -.02 0"
+        scale="1.5 1.5 1.5"></a-entity>
 
          <!-- Тыква -->
       <a-entity class="models" gltf-model="#heliModel" animation-mixer="clip: arm_helicopter_fly; loop: repeat" rotation="0 -45 0" position="-0.5 .5 0"
