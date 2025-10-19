@@ -166,9 +166,10 @@ const onArReady = async (e) => {
 
   maskBtn.addEventListener("click", async () => {
     if (!faceMode) {
-      if (arSystem) await arSystem.pause(); 
-      showMask(); 
-      await startFaceScene(); 
+      if (arSystem) await arSystem.pause();
+      hideScanner();
+      showMask();
+      await startFaceScene();
       faceMode = true;
     }
   });
@@ -219,9 +220,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const maskCloseBtn = document.querySelector("#maskCloseBtn");
   maskCloseBtn.addEventListener("click", async () => {
     if (faceMode) {
-      await stopFaceScene(); // выключаем маску
+      await stopFaceScene();
       hideMask();
-      if (arSystem) arSystem.unpause(); 
+      showScanner();
+      if (arSystem) arSystem.unpause();
       faceMode = false;
     }
   });
