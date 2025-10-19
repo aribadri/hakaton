@@ -36,8 +36,7 @@ closeBtn.addEventListener("click", () => {
   rightBTN.classList.add("hidden");
   closeBtn.classList.add("hidden");
 
-  // Show mask button when returning to AR mode
-  maskBtn.classList.remove("hidden");
+  // maskBtn.classList.remove("hidden");
 });
 
 //

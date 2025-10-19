@@ -41,8 +41,4 @@ export const hideMask = () => {
   if (maskContainer) {
     maskContainer.classList.add("hidden");
   }
-
-  if (maskBtn) {
-    maskBtn.classList.remove("hidden");
-  }
 };
