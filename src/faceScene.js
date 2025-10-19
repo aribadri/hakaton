@@ -9,6 +9,7 @@ let mindarThree = null;
 let avatar = null;
 let isInitialized = false;
 let isRunning = false;
+let container = null;
 
 class Avatar {
   constructor() {
@@ -55,7 +56,7 @@ class Avatar {
 
 export const initFaceScene = async () => {
   if (isInitialized) return;
-  const container = document.querySelector(".mask-content");
+  container = document.querySelector(".mask-content");
   mindarThree = new MindARThree({
     container,
     face: true,

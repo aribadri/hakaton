@@ -161,13 +161,16 @@ const onArReady = async (e) => {
     leftBTN.classList.remove("hidden");
     rightBTN.classList.remove("hidden");
 
-    // Hide mask button when panorama is open
     maskBtn.classList.add("hidden");
   });
 
-  // Mask button click handler
-  maskBtn.addEventListener("click", () => {
-    showMask(arSystem);
+  maskBtn.addEventListener("click", async () => {
+    if (!faceMode) {
+      if (arSystem) await arSystem.pause(); 
+      showMask(); 
+      await startFaceScene(); 
+      faceMode = true;
+    }
   });
 };
 
@@ -212,20 +215,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const sceneEl = document.querySelector("#scene-image");
   sceneEl.addEventListener("arReady", onArReady);
 
-  // // _____ПЕРЕКЛЮЧАЕМ РЕЖИМ С IMAGE на FACE___________
-  // const toggleBtn = document.querySelector("#maskBtn");
-  // toggleBtn.addEventListener("click", async () => {
-  //   if (!faceMode) {
-  //     if (arSystem) await arSystem.pause();
-  //     await startFaceScene(); // запускаем маску
-  //     faceMode = true;
-
-  //   } else {
-  //     await stopFaceScene(); // выключаем маску
-  //     arSystem.unpause();
-  //     faceMode = false;
-  //   }
-  // });
+  // _____ПЕРЕКЛЮЧАЕМ РЕЖИМ С IMAGE на FACE___________
+  const maskCloseBtn = document.querySelector("#maskCloseBtn");
+  maskCloseBtn.addEventListener("click", async () => {
+    if (faceMode) {
+      await stopFaceScene(); // выключаем маску
+      hideMask();
+      if (arSystem) arSystem.unpause(); 
+      faceMode = false;
+    }
+  });
 
   const observer = new MutationObserver(() => {
     const dialogText = document.querySelector(".a-dialog-text");
