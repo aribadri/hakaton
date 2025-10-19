@@ -1,4 +1,6 @@
 import { gsap } from "gsap";
+import { getMode } from "../state.js";
+import { getFaceRenderer, getFaceCamera, getFaceVideo } from "../faceScene.js";
 
 const getScreenshot = {
   init: function () {
@@ -92,10 +94,20 @@ const getScreenshot = {
       flash.style.opacity = "1";
       setTimeout(() => (flash.style.opacity = "0"), 120);
 
-      const video = sceneEl.systems["mindar-image-system"]?.video;
-      const renderer = sceneEl.renderer;
-      const camera = sceneEl.camera;
-      const threeScene = sceneEl.object3D;
+      const mode = getMode();
+      let video, renderer, camera, threeScene;
+
+      if (mode === "face") {
+        video = getFaceVideo();
+        renderer = getFaceRenderer();
+        camera = getFaceCamera();
+        threeScene = renderer?.scene;
+      } else {
+        video = sceneEl.systems["mindar-image-system"]?.video;
+        renderer = sceneEl.renderer;
+        camera = sceneEl.camera;
+        threeScene = sceneEl.object3D;
+      }
 
       if (!video || !renderer || !camera) return;
 

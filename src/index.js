@@ -11,6 +11,7 @@ import { initScanner } from "./components/scanner/scanner.js";
 import { Quiz } from "./components/quiz/quiz.js";
 import { initMask, showMask, hideMask } from "./components/mask/mask.js";
 import { startFaceScene, stopFaceScene } from "./faceScene.js";
+import { setMode } from "./state.js";
 
 
 AFRAME.registerComponent("screenshot-ui", getScreenshot);
@@ -170,6 +171,7 @@ const onArReady = async (e) => {
       hideScanner();
       showMask();
       await startFaceScene();
+      setMode("face");
       faceMode = true;
     }
   });
@@ -223,6 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await stopFaceScene();
       hideMask();
       showScanner();
+      setMode("image");
       if (arSystem) arSystem.unpause();
       faceMode = false;
     }

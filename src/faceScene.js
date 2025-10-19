@@ -112,4 +112,8 @@ const stopFaceScene = async () => {
   isRunning = false;
 };
 
+export const getFaceRenderer = () => mindarThree?.renderer;
+export const getFaceCamera = () => mindarThree?.camera;
+export const getFaceVideo = () => mindarThree?.video;
+
 export { startFaceScene, pauseFaceScene, stopFaceScene };
