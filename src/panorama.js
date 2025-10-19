@@ -30,7 +30,7 @@ const devicePixelRatio = Math.min(window.devicePixelRatio, 2);
 const canvas = document.querySelector(".panorama");
 const rightBTN = document.querySelector(".btn-right");
 const leftBTN = document.querySelector(".btn-left");
-const maskBtn = document.querySelector("#maskBtn");
+// const maskBtn = document.querySelector("#maskBtn"); // MASK DISABLED
 const arSystem = mindarScene.systems["mindar-image-system"];
 
 const cleanupPanorama = () => {
@@ -88,8 +88,8 @@ closeBtn.addEventListener("click", () => {
   rightBTN.classList.add("hidden");
   closeBtn.classList.add("hidden");
 
-  // Show mask button when returning to AR mode
-  maskBtn.classList.remove("hidden");
+  // Show mask button when returning to AR mode - MASK DISABLED
+  // maskBtn.classList.remove("hidden");
 });
 
 //

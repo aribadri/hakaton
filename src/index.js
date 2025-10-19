@@ -9,8 +9,8 @@ import {
 } from "./components/preloader/preloader.js";
 import { initScanner } from "./components/scanner/scanner.js";
 import { Quiz } from "./components/quiz/quiz.js";
-import { initMask, showMask, hideMask } from "./components/mask/mask.js";
-import { startFaceScene, stopFaceScene } from "./faceScene.js";
+import { initMask, hideMask } from "./components/mask/mask.js";
+import { stopFaceScene } from "./faceScene.js";
 import { setMode } from "./state.js";
 
 
@@ -110,7 +110,7 @@ const onArReady = async (e) => {
   const rightBTN = document.querySelector(".btn-right");
   const leftBTN = document.querySelector(".btn-left");
   const panBtn = document.querySelector("#panoramaBtn");
-  const maskBtn = document.querySelector("#maskBtn");
+  // const maskBtn = document.querySelector("#maskBtn"); // MASK DISABLED
 
   arSystem = e.target.systems["mindar-image-system"];
 
@@ -134,7 +134,7 @@ const onArReady = async (e) => {
 
   let panoramaInitialized = false;
   let panBtnListenerAdded = false;
-  let maskBtnListenerAdded = false;
+  // let maskBtnListenerAdded = false; // MASK DISABLED
 
   // Добавляем обработчик только один раз
   if (!panBtnListenerAdded) {
@@ -167,24 +167,25 @@ const onArReady = async (e) => {
       leftBTN.classList.remove("hidden");
       rightBTN.classList.remove("hidden");
 
-      maskBtn.classList.add("hidden");
+      // maskBtn.classList.add("hidden"); // MASK DISABLED
     });
   }
 
-  // Добавляем обработчик только один раз
-  if (!maskBtnListenerAdded) {
-    maskBtnListenerAdded = true;
-    maskBtn.addEventListener("click", async () => {
-      if (!faceMode) {
-        if (arSystem) await arSystem.pause();
-        hideScanner();
-        showMask();
-        await startFaceScene();
-        setMode("face");
-        faceMode = true;
-      }
-    });
-  }
+  // MASK FUNCTIONALITY DISABLED
+  // // Добавляем обработчик только один раз
+  // if (!maskBtnListenerAdded) {
+  //   maskBtnListenerAdded = true;
+  //   maskBtn.addEventListener("click", async () => {
+  //     if (!faceMode) {
+  //       if (arSystem) await arSystem.pause();
+  //       hideScanner();
+  //       showMask();
+  //       await startFaceScene();
+  //       setMode("face");
+  //       faceMode = true;
+  //     }
+  //   });
+  // }
 };
 
 document.addEventListener("DOMContentLoaded", () => {
