@@ -1,8 +1,7 @@
 const panoList = [
-  "textures/panorama1.jpg",
-  "textures/panorama2.jpg",
-  "textures/panorama3.jpg",
-  "textures/panorama4.jpg",
+  "textures/Souz.JPG",
+  "textures/Souz2.JPG",
+  "textures/Souz3.JPG",
 ];
 
 const volkTemplate = `

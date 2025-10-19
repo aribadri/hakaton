@@ -56,8 +56,8 @@ const getScreenshot = {
       <div class="cta-content">
         <div class="cta-icon">🎁</div>
         <div class="cta-text">
-          <div class="cta-title">Выиграй приз!</div>
-          <div class="cta-subtitle">Поделись фото ВКонтакте с хештегом #СоюзМультПарк</div>
+          <div class="cta-title">Участвуй в конкурсе!</div>
+          <div class="cta-subtitle">И получи скидку на вход</div>
           <div class="cta-info">Подробности на кассе</div>
         </div>
       </div>
@@ -90,6 +90,9 @@ const getScreenshot = {
     // 📸 Сделать фото
     //
     captureBtn.addEventListener("click", () => {
+      // Скрываем кнопку маски сразу
+      if (maskBtn) maskBtn.classList.add("hidden");
+
       // эффект вспышки
       flash.style.opacity = "1";
       setTimeout(() => (flash.style.opacity = "0"), 120);
