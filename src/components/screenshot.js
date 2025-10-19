@@ -1,6 +1,6 @@
 import { gsap } from "gsap";
 import { getMode } from "../state.js";
-import { getFaceRenderer, getFaceCamera, getFaceVideo } from "../faceScene.js";
+import { getFaceRenderer, getFaceCamera, getFaceVideo, getFaceScene } from "../faceScene.js";
 
 const getScreenshot = {
   init: function () {
@@ -101,7 +101,7 @@ const getScreenshot = {
         video = getFaceVideo();
         renderer = getFaceRenderer();
         camera = getFaceCamera();
-        threeScene = renderer?.scene;
+        threeScene = getFaceScene();
       } else {
         video = sceneEl.systems["mindar-image-system"]?.video;
         renderer = sceneEl.renderer;
@@ -166,10 +166,18 @@ const getScreenshot = {
       arRenderer.outputEncoding = THREE.sRGBEncoding;
       arRenderer.toneMapping = THREE.NoToneMapping;
 
-      camera.aspect = cw / ch;
-      camera.updateProjectionMatrix();
+      const screenshotCamera = new THREE.PerspectiveCamera(
+        camera.fov,
+        cw / ch,
+        camera.near,
+        camera.far
+      );
+      screenshotCamera.position.copy(camera.position);
+      screenshotCamera.quaternion.copy(camera.quaternion);
+      screenshotCamera.scale.copy(camera.scale);
+      screenshotCamera.updateMatrixWorld();
 
-      arRenderer.render(threeScene, camera);
+      arRenderer.render(threeScene, screenshotCamera);
 
       // рисуем AR поверх
       ctx.drawImage(arCanvas, 0, 0, cw, ch);
