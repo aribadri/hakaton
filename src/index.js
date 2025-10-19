@@ -117,7 +117,7 @@ const onArReady = async (e) => {
   panBtn.classList.remove("hidden");
 
   // Mask button - show in AR mode
-  maskBtn.classList.remove("hidden");
+  // maskBtn.classList.remove("hidden");
 
   // Quiz button
   const quizBtn = document.querySelector("#quizBtn");
