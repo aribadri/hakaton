@@ -28,7 +28,7 @@ const volkTemplate = `
     </a-entity>`;
 
 const trioTemplate = `
-    <a-entity class="target-trio-content">
+    <a-entity class="target-trio-content" scale="0.8 0.8 0.8">
 
      <!-- Указатель -->
 
