@@ -6,42 +6,44 @@ export const initMask = () => {
           <path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-width="2.5" stroke-linecap="round" />
         </svg>
       </button>
+        <video id="video-feed">
+  </video> 
       <div class="mask-content">
         <!-- Здесь будет контент маски -->
       </div>
     </div>
   `;
 
-  document.body.insertAdjacentHTML('afterbegin', markup);
+  document.body.insertAdjacentHTML("afterbegin", markup);
 
-  const closeBtn = document.getElementById('maskCloseBtn');
-  closeBtn.addEventListener('click', hideMask);
+  const closeBtn = document.getElementById("maskCloseBtn");
+  closeBtn.addEventListener("click", hideMask);
 
-  return document.getElementById('mask-container');
+  return document.getElementById("mask-container");
 };
 
 export const showMask = () => {
-  const maskContainer = document.querySelector('#mask-container');
-  const maskBtn = document.querySelector('#maskBtn');
+  const maskContainer = document.querySelector("#mask-container");
+  const maskBtn = document.querySelector("#maskBtn");
 
   if (maskContainer) {
-    maskContainer.classList.remove('hidden');
+    maskContainer.classList.remove("hidden");
   }
 
   if (maskBtn) {
-    maskBtn.classList.add('hidden');
+    maskBtn.classList.add("hidden");
   }
 };
 
 export const hideMask = () => {
-  const maskContainer = document.querySelector('#mask-container');
-  const maskBtn = document.querySelector('#maskBtn');
+  const maskContainer = document.querySelector("#mask-container");
+  const maskBtn = document.querySelector("#maskBtn");
 
   if (maskContainer) {
-    maskContainer.classList.add('hidden');
+    maskContainer.classList.add("hidden");
   }
 
   if (maskBtn) {
-    maskBtn.classList.remove('hidden');
+    maskBtn.classList.remove("hidden");
   }
 };

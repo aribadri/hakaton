@@ -5,9 +5,6 @@ import { MindARThree } from "../static/libs/mindar-face-three.prod";
 import maskModel from "../static/models/mask_cheburashka_03_comp-v1.glb";
 // import maskModel from "../static/models/helmet1.glb";
 
-
-const container = document.getElementById("container-mask");
-
 let mindarThree = null;
 let avatar = null;
 let isInitialized = false;
@@ -56,9 +53,9 @@ class Avatar {
   }
 }
 
-export const initMask = async () => {
+export const initFaceScene = async () => {
   if (isInitialized) return;
-
+  const container = document.querySelector(".mask-content");
   mindarThree = new MindARThree({
     container,
     face: true,
@@ -89,29 +86,29 @@ export const initMask = async () => {
   isInitialized = true;
 };
 
-const startMask = async () => {
-  if (!isInitialized) await initMask();
+const startFaceScene = async () => {
+  if (!isInitialized) await initFaceScene();
 
   container.classList.remove("hidden");
   await mindarThree.start();
   isRunning = true;
 };
 
-const pauseMask = async () => {
+const pauseFaceScene = async () => {
   if (!isInitialized || !isRunning) return;
   await mindarThree.pause();
   isRunning = false;
   container.classList.add("hidden");
 };
 
-const stopMask = async () => {
+const stopFaceScene = async () => {
   if (!isInitialized) return;
   await mindarThree.stop();
-  container.classList.add("hidden");
+  // container.classList.add("hidden");
   mindarThree = null;
   avatar = null;
   isInitialized = false;
   isRunning = false;
 };
 
-export { startMask, pauseMask, stopMask };
+export { startFaceScene, pauseFaceScene, stopFaceScene };

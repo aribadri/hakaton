@@ -1,7 +1,6 @@
 import { getScreenshot } from "./components/screenshot.js";
 import { animate } from "./components/animation.js";
 
-
 import { preloadTextures, startPanorama } from "./panorama";
 import config from "./config.js";
 import {
@@ -11,13 +10,13 @@ import {
 import { initScanner } from "./components/scanner/scanner.js";
 import { Quiz } from "./components/quiz/quiz.js";
 import { initMask, showMask, hideMask } from "./components/mask/mask.js";
-import { startMask, stopMask } from "./mask.js";
+import { startFaceScene, stopFaceScene } from "./faceScene.js";
 
-let faceMode = false;
 
 AFRAME.registerComponent("screenshot-ui", getScreenshot);
 AFRAME.registerComponent("custom-animation", animate);
 
+let faceMode = false;
 let arSystem;
 let activeTargetsCount = 0;
 let scannerTimeout = null;
@@ -75,7 +74,7 @@ const setContent = () => {
 
       // Если нет активных таргетов, запускаем таймаут на показ сканера
       if (activeTargetsCount <= 0) {
-        activeTargetsCount = 0; 
+        activeTargetsCount = 0;
 
         if (scannerTimeout) {
           clearTimeout(scannerTimeout);
@@ -168,7 +167,7 @@ const onArReady = async (e) => {
 
   // Mask button click handler
   maskBtn.addEventListener("click", () => {
-    showMask();
+    showMask(arSystem);
   });
 };
 
@@ -213,22 +212,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const sceneEl = document.querySelector("#scene-image");
   sceneEl.addEventListener("arReady", onArReady);
 
-
-  // _____ПЕРЕКЛЮЧАЕМ РЕЖИМ С IMAGE на FACE___________
-  // const toggleBtn = document.querySelector("#changeARModeBtn");
+  // // _____ПЕРЕКЛЮЧАЕМ РЕЖИМ С IMAGE на FACE___________
+  // const toggleBtn = document.querySelector("#maskBtn");
   // toggleBtn.addEventListener("click", async () => {
   //   if (!faceMode) {
   //     if (arSystem) await arSystem.pause();
-  //     // sceneEl.classList.add("hidden");
-  //     await startMask(); // запускаем маску
+  //     await startFaceScene(); // запускаем маску
   //     faceMode = true;
-  //     toggleBtn.textContent = "Вернуться в AR";
+
   //   } else {
-  //     await stopMask(); // выключаем маску
+  //     await stopFaceScene(); // выключаем маску
   //     arSystem.unpause();
-  //     // sceneEl.classList.remove("hidden");
   //     faceMode = false;
-  //     toggleBtn.textContent = "Маска";
   //   }
   // });
 
