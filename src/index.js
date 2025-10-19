@@ -117,7 +117,7 @@ const onArReady = async (e) => {
   panBtn.classList.remove("hidden");
 
   // Mask button - show in AR mode
-  maskBtn.classList.remove("hidden");
+  // maskBtn.classList.remove("hidden");
 
   // Quiz button
   const quizBtn = document.querySelector("#quizBtn");
@@ -140,34 +140,34 @@ const onArReady = async (e) => {
   if (!panBtnListenerAdded) {
     panBtnListenerAdded = true;
     panBtn.addEventListener("click", async () => {
-    arSystem.stop();
+      arSystem.stop();
 
-    if (!panoramaInitialized) {
-      panoramaInitialized = true;
+      if (!panoramaInitialized) {
+        panoramaInitialized = true;
 
-      let hasPermission = true;
-      if (
-        typeof DeviceOrientationEvent !== "undefined" &&
-        typeof DeviceOrientationEvent.requestPermission === "function"
-      ) {
-        try {
-          const response = await DeviceOrientationEvent.requestPermission();
-          hasPermission = response === "granted";
-        } catch (error) {
-          console.error("Permission request failed:", error);
-          hasPermission = false;
+        let hasPermission = true;
+        if (
+          typeof DeviceOrientationEvent !== "undefined" &&
+          typeof DeviceOrientationEvent.requestPermission === "function"
+        ) {
+          try {
+            const response = await DeviceOrientationEvent.requestPermission();
+            hasPermission = response === "granted";
+          } catch (error) {
+            console.error("Permission request failed:", error);
+            hasPermission = false;
+          }
         }
+
+        startPanorama(hasPermission);
       }
 
-      startPanorama(hasPermission);
-    }
+      closeBtn.classList.remove("hidden");
+      canvas.classList.remove("hidden");
+      leftBTN.classList.remove("hidden");
+      rightBTN.classList.remove("hidden");
 
-    closeBtn.classList.remove("hidden");
-    canvas.classList.remove("hidden");
-    leftBTN.classList.remove("hidden");
-    rightBTN.classList.remove("hidden");
-
-    maskBtn.classList.add("hidden");
+      maskBtn.classList.add("hidden");
     });
   }
 
