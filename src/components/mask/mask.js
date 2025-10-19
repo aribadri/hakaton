@@ -32,6 +32,8 @@ export const showMask = () => {
   }
 };
 
+
+
 export const hideMask = () => {
   const maskContainer = document.querySelector("#mask-container");
   const maskBtn = document.querySelector("#maskBtn");
