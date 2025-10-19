@@ -82,7 +82,7 @@ const getScreenshot = {
     const shareBtn = btns.querySelector("#shareBtn");
     const saveBtn = btns.querySelector("#saveBtn");
     const filesBtn = btns.querySelector("#filesBtn");
-    const maskBtn = document.querySelector("#maskBtn");
+    // const maskBtn = document.querySelector("#maskBtn"); // MASK DISABLED
 
     let lastDataUrl = null;
 
@@ -174,7 +174,7 @@ const getScreenshot = {
         saveBtn.classList.remove("hidden");
         filesBtn.classList.add("hidden");
 
-        if (maskBtn) maskBtn.classList.add("hidden");
+        // if (maskBtn) maskBtn.classList.add("hidden"); // MASK DISABLED
       } else {
         const video = sceneEl.systems["mindar-image-system"]?.video;
         const renderer = sceneEl.renderer;
@@ -271,7 +271,7 @@ const getScreenshot = {
         filesBtn.classList.add("hidden");
 
         // Hide mask button when photo is taken
-        if (maskBtn) maskBtn.classList.add("hidden");
+        // if (maskBtn) maskBtn.classList.add("hidden"); // MASK DISABLED
       }
     });
 
@@ -361,7 +361,7 @@ const getScreenshot = {
       backBtn.classList.add("hidden");
 
       // Show mask button when returning to AR mode
-      if (maskBtn) maskBtn.classList.remove("hidden");
+      // if (maskBtn) maskBtn.classList.remove("hidden"); // MASK DISABLED
     });
   },
 };
